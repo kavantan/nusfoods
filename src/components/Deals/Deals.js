@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../../config/firebaseConfig";
+import { getDocs } from "firebase/firestore";
+import { foodstoreCollectionRef } from "../../config/firebase.collections";
 
 const Deals = () => {
   const [foodstores, setFoodstores] = useState([]);
@@ -10,7 +10,6 @@ const Deals = () => {
   }, []); // Runs on first render, might change later
 
   const getFoodstores = () => {
-    const foodstoreCollectionRef = collection(db, "foodstores");
     getDocs(foodstoreCollectionRef)
       .then((response) => {
         const fs = response.docs.map((doc) => ({
