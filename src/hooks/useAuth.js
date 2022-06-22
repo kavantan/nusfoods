@@ -1,21 +1,8 @@
-import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { firebaseConfig } from "../config/firebaseConfig.js";
-
-// Code edited from https://usehooks.com/useAuth/ and
-// https://firebase.google.com/docs/auth/web/start#add-initialize-sdk
-// Not my original work.
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Authentication and get a reference to the service
-const firebaseAuth = getAuth(app);
+import { firebaseAuth, googleAuthProvider } from "../config/firebaseConfig.js";
 
 const authContext = createContext();
-
-const googleAuthProvider = new GoogleAuthProvider();
 
 // Provider component that wraps your app and makes auth object ...
 // ... available to any child component that calls useAuth().
