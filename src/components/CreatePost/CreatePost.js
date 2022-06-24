@@ -25,7 +25,7 @@ const CreatePost = () => {
     <div className={styles.createPostPage}>
       <div className={styles.cpContainer}>
         <h1>Create A Post</h1>
-        <div className="inputGp">
+        <div className={styles.inputGp}>
           <label> Title:</label>
           <input
             placeholder="Title..."
