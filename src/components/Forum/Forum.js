@@ -4,6 +4,7 @@ import { getDocs, deleteDoc, doc } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth.js";
 import { db } from "../../config/firebaseConfig";
 import { postsCollectionRef } from "../../config/firebase.collections";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Forum() {
   const { user } = useAuth();
@@ -11,7 +12,7 @@ function Forum() {
 
   useEffect(() => {
     getPosts();
-  }, []); // Runs on first render, might change later
+  });
 
   const getPosts = () => {
     getDocs(postsCollectionRef)
@@ -25,9 +26,8 @@ function Forum() {
       .catch((error) => console.log(error.message));
   };
 
-  const deletePost = async (id) => {
-    const postDoc = doc(db, "posts", id);
-    await deleteDoc(postDoc);
+  const deletePost = (id) => {
+    deleteDoc(doc(db, "posts", id));
   };
 
   return (
@@ -43,11 +43,10 @@ function Forum() {
                 {user && post.data.author.id === user.uid && (
                   <button
                     onClick={() => {
-                      deletePost(post.data.id);
+                      deletePost(post.id);
                     }}
                   >
-                    {" "}
-                    &#128465;
+                    <DeleteIcon />
                   </button>
                 )}
               </div>
