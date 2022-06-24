@@ -1,39 +1,67 @@
-import { useState, useEffect } from "react";
-import { getDocs } from "firebase/firestore";
-import { foodstoreCollectionRef } from "../../config/firebase.collections";
+import styles from "./Forum.module.css";
+import { useEffect, useState } from "react";
+import { getDocs, deleteDoc, doc } from "firebase/firestore";
+import { useAuth } from "../../hooks/useAuth.js";
+import { db } from "../../config/firebaseConfig";
+import { postsCollectionRef } from "../../config/firebase.collections";
 
-const Forum = () => {
-  const [foodstores, setFoodstores] = useState([]);
+function Forum() {
+  const { user } = useAuth();
+  const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    getFoodstores();
+    getPosts();
   }, []); // Runs on first render, might change later
 
-  const getFoodstores = () => {
-    getDocs(foodstoreCollectionRef)
+  const getPosts = () => {
+    getDocs(postsCollectionRef)
       .then((response) => {
         const fs = response.docs.map((doc) => ({
           data: doc.data(),
           id: doc.id,
         }));
-        setFoodstores(fs);
+        setPosts(fs);
       })
       .catch((error) => console.log(error.message));
   };
 
+  const deletePost = async (id) => {
+    const postDoc = doc(db, "posts", id);
+    await deleteDoc(postDoc);
+  };
+
   return (
-    <div>
-      <u1>
-        {foodstores.map((foodstore) => (
-          <>
-            <h2> {foodstore.data.title}</h2>
-            <li> {foodstore.data.desc} </li>
-            <li>number of upvotes: {foodstore.data.upvotes}</li>
-          </>
-        ))}
-      </u1>
+    <div className={styles.homePage}>
+      {posts.map((post) => {
+        return (
+          <div className={styles.post}>
+            <div className={styles.postHeader}>
+              <div className={styles.title}>
+                <h1> {post.data.title}</h1>
+              </div>
+              <div className={styles.deletePost}>
+                {user && post.data.author.id === user.uid && (
+                  <button
+                    onClick={() => {
+                      deletePost(post.data.id);
+                    }}
+                  >
+                    {" "}
+                    &#128465;
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className={styles.postTextContainer}>
+              {" "}
+              {post.data.postText}{" "}
+            </div>
+            <h3>Posted by User: {post.data.author.name}</h3>
+          </div>
+        );
+      })}
     </div>
   );
-};
+}
 
 export default Forum;
