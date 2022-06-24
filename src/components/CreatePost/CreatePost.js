@@ -26,7 +26,7 @@ const CreatePost = () => {
       <div className={styles.cpContainer}>
         <h1>Create A Post</h1>
         <div className={styles.inputGp}>
-          <label> Title:</label>
+          <label>Title:</label>
           <input
             placeholder="Title..."
             onChange={(event) => {
@@ -35,7 +35,7 @@ const CreatePost = () => {
           />
         </div>
         <div className={styles.inputGp}>
-          <label> Post:</label>
+          <label>Post:</label>
           <textarea
             placeholder="Post..."
             onChange={(event) => {
@@ -43,7 +43,7 @@ const CreatePost = () => {
             }}
           />
         </div>
-        <button onClick={createPost}> Submit Post</button>
+        <button onClick={createPost}>Submit Post</button>
       </div>
     </div>
   );
