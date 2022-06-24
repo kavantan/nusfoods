@@ -18,7 +18,7 @@ const CreatePost = () => {
       postText,
       author: { name: user.displayName, id: user.uid },
     });
-    navigate("/");
+    navigate("/forum");
   };
 
   return (
