@@ -18,7 +18,7 @@ const CreatePost = () => {
       postText,
       author: { name: user.displayName, id: user.uid },
       createdAt: serverTimestamp(),
-      createdAtString: new Date().toString(),
+      createdAtString: new Date().toLocaleString(),
     });
     navigate("/forum");
   };

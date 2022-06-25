@@ -69,8 +69,11 @@ function Forum() {
                 {" "}
                 {post.data.postText}{" "}
               </div>
-              <h3>Posted by user: {post.data.author.name}</h3>
-              <h3>{post.data.createdAtString}</h3>
+              <pre style={{ fontWeight: "bold" }}>
+                Posted by user: {post.data.author.name}
+                {"           "}
+                {post.data.createdAtString}
+              </pre>
             </div>
           );
         })}
