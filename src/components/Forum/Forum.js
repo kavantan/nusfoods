@@ -36,13 +36,17 @@ function Forum() {
 
   return (
     <div className={styles.homePage}>
-      <div className={styles.button}>
-        <Button variant="contained">
-          <NavLink className={styles.button} to="/createpost">
-            Post a new review
-          </NavLink>
-        </Button>
-      </div>
+      {user ? (
+        <div className={styles.button}>
+          <Button variant="contained">
+            <NavLink className={styles.button} to="/createpost">
+              Post a new review
+            </NavLink>
+          </Button>
+        </div>
+      ) : (
+        <></>
+      )}
       {posts.map((post) => {
         return (
           <div className={styles.post}>
