@@ -51,7 +51,6 @@ function Forum() {
                 <div className={styles.title}>
                   <h1> {post.data.title}</h1>
                 </div>
-                {/* <div className="timestamp">{post.data.createdAt}</div> */}
                 <div className={styles.deletePost}>
                   {user && post.data.author.id === user.uid && (
                     <Tooltip title="Delete">
@@ -70,7 +69,8 @@ function Forum() {
                 {" "}
                 {post.data.postText}{" "}
               </div>
-              <h3>Posted by User: {post.data.author.name}</h3>
+              <h3>Posted by user: {post.data.author.name}</h3>
+              <h3>{post.data.createdAtString}</h3>
             </div>
           );
         })}

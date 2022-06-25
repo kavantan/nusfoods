@@ -29,10 +29,6 @@
   flex: 50%;
 }
 
-.postHeader .timestamp {
-  flex: 50%;
-}
-
 .postHeader .deletePost {
   flex: 50%;
   display: flex;
