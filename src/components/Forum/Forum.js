@@ -47,9 +47,7 @@ function Forum() {
         return (
           <div className={styles.post}>
             <div className={styles.postHeader}>
-              <div className={styles.title}>
-                <h1> {post.data.title}</h1>
-              </div>
+              <div className={styles.title}>{post.data.title}</div>
               <div className={styles.deletePost}>
                 {user && post.data.author.id === user.uid && (
                   <Tooltip title="Delete">
