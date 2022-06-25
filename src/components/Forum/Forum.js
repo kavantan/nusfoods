@@ -1,6 +1,6 @@
 import styles from "./Forum.module.css";
 import { useEffect, useState } from "react";
-import { getDocs, deleteDoc, doc } from "firebase/firestore";
+import { getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth.js";
 import { db } from "../../config/firebaseConfig";
 import { postsCollectionRef } from "../../config/firebase.collections";
@@ -17,7 +17,8 @@ function Forum() {
   }, []);
 
   const getPosts = () => {
-    getDocs(postsCollectionRef)
+    const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
+    getDocs(q)
       .then((response) => {
         const fs = response.docs.map((doc) => ({
           data: doc.data(),
@@ -50,6 +51,7 @@ function Forum() {
                 <div className={styles.title}>
                   <h1> {post.data.title}</h1>
                 </div>
+                {/* <div className="timestamp">{post.data.createdAt}</div> */}
                 <div className={styles.deletePost}>
                   {user && post.data.author.id === user.uid && (
                     <Tooltip title="Delete">
