@@ -1,0 +1,5 @@
+# Fixes page refresh 404 issue for netlify deployment
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
