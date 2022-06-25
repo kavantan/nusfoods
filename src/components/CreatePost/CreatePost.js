@@ -1,6 +1,6 @@
 import styles from "./CreatePost.module.css";
 import { useState } from "react";
-import { addDoc } from "firebase/firestore";
+import { addDoc, serverTimestamp } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { postsCollectionRef } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -17,6 +17,7 @@ const CreatePost = () => {
       title,
       postText,
       author: { name: user.displayName, id: user.uid },
+      createdAt: serverTimestamp(),
     });
     navigate("/forum");
   };

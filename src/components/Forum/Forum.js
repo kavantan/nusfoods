@@ -14,7 +14,7 @@ function Forum() {
 
   useEffect(() => {
     getPosts();
-  });
+  }, []);
 
   const getPosts = () => {
     getDocs(postsCollectionRef)
