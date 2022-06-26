@@ -14,6 +14,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import ForumIcon from "@mui/icons-material/Forum";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
+import StoreIcon from "@mui/icons-material/Store";
 import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -192,6 +193,18 @@ const AppShell = () => {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {user ? (
               <>
+                <Tooltip title="Stores">
+                  <IconButton
+                    size="large"
+                    aria-label="list all stores"
+                    color="inherit"
+                  >
+                    <NavLink to="/stores" className={styles.button}>
+                      <StoreIcon />
+                    </NavLink>
+                  </IconButton>
+                </Tooltip>
+
                 <Tooltip title="Forums">
                   <IconButton
                     size="large"
