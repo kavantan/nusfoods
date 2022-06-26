@@ -28,3 +28,8 @@
   font-size: 75px;
   font-family: Modak;
 }
+
+.button {
+  padding-top: 10px;
+  padding-left: 5px;
+}
