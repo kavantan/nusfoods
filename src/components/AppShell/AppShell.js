@@ -1,3 +1,4 @@
+import styles from "./AppShell.module.css";
 import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
@@ -17,6 +18,7 @@ import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/nusfoodslogo.png";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -104,15 +106,6 @@ const AppShell = () => {
         <>
           <MenuItem>
             <NavLink
-              to="/"
-              style={{ textDecoration: "inherit", color: "inherit" }}
-              onClick={handleMenuClose}
-            >
-              Home
-            </NavLink>
-          </MenuItem>
-          <MenuItem>
-            <NavLink
               to="/profile"
               style={{ textDecoration: "inherit", color: "inherit" }}
               onClick={handleMenuClose}
@@ -181,10 +174,8 @@ const AppShell = () => {
             component="div"
             sx={{ display: { xs: "none", sm: "block" } }}
           >
-            <NavLink
-              to="/"
-              style={{ textDecoration: "inherit", color: "inherit" }}
-            >
+            <NavLink className={styles.home} to="/">
+              <img className={styles.logo} src={logo} alt="NUSFoods logo" />{" "}
               NUSFoods
             </NavLink>
           </Typography>
@@ -207,10 +198,7 @@ const AppShell = () => {
                     aria-label="open reviews forum page"
                     color="inherit"
                   >
-                    <NavLink
-                      to="/forum"
-                      style={{ textDecoration: "inherit", color: "inherit" }}
-                    >
+                    <NavLink to="/forum" className={styles.button}>
                       <ForumIcon />
                     </NavLink>
                   </IconButton>
@@ -222,10 +210,7 @@ const AppShell = () => {
                     aria-label="open deals and discounts"
                     color="inherit"
                   >
-                    <NavLink
-                      to="/deals"
-                      style={{ textDecoration: "inherit", color: "inherit" }}
-                    >
+                    <NavLink to="/deals" className={styles.button}>
                       <LocalOfferIcon />
                     </NavLink>
                   </IconButton>
@@ -242,7 +227,7 @@ const AppShell = () => {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                color="inherit"
+                className={styles.button}
               >
                 <AccountCircle />
               </IconButton>
@@ -255,7 +240,7 @@ const AppShell = () => {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color="inherit"
+              className={styles.button}
             >
               <MoreIcon />
             </IconButton>
