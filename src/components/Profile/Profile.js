@@ -1,11 +1,10 @@
 import styles from "./Profile.module.css";
-import placeholder from "../../assets/profile-placeholder.png";
+import { useAuth } from "../../hooks/useAuth";
 
 const Profile = () => {
+  const { user } = useAuth();
   return (
-    <div>
-      <img src={placeholder} alt="Profile Page" className={styles.Center}></img>
-    </div>
+    <div className={styles.welcome}>Welcome back, {user?.displayName}</div>
   );
 };
 
