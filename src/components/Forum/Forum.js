@@ -11,11 +11,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 function Forum() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [foodstores, setFoodstores] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     getPosts();
@@ -96,7 +98,14 @@ function Forum() {
               {foodstores.map((foodstore) => {
                 return (
                   foodstore.id === post.data.foodStoreId && (
-                    <div>Store: {foodstore.data.title}</div>
+                    <div
+                      className={styles.clickable}
+                      onClick={() =>
+                        navigate("../stores/" + foodstore.data.dir)
+                      }
+                    >
+                      Store: {foodstore.data.title}
+                    </div>
                   )
                 );
               })}
