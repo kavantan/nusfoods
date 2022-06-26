@@ -27,9 +27,7 @@ const Stores = () => {
       {foodstores.map((foodstore) => {
         return (
           <div className={styles.store}>
-            <div className={styles.storeHeader}>
-              <div className={styles.title}>{foodstore.data.title}</div>
-            </div>
+            <div className={styles.storeHeader}>{foodstore.data.title}</div>
             <div className={styles.storeTextContainer}>
               {foodstore.data.desc}
             </div>
