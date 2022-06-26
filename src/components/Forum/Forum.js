@@ -71,11 +71,7 @@ function Forum() {
               {post.data.postText}{" "}
             </div>
             <div className={styles.postedBy}>
-              <pre>
-                Posted by user: {post.data.author.name}
-                {"           "}
-                {post.data.createdAtString}
-              </pre>
+              Posted by {post.data.author.name} on {post.data.createdAtString}
             </div>
           </div>
         );
