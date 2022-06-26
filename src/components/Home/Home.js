@@ -25,6 +25,7 @@ const Home = () => {
 
   return (
     <div className={styles.homePage}>
+      Featured store of the day!
       {foodstores.map((foodstore) => {
         return (
           <div className={styles.store}>
