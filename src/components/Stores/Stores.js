@@ -26,11 +26,11 @@ const Stores = () => {
     <div className={styles.storesPage}>
       {foodstores.map((foodstore) => {
         return (
-          <div className={styles.post}>
-            <div className={styles.postHeader}>
+          <div className={styles.store}>
+            <div className={styles.storeHeader}>
               <div className={styles.title}>{foodstore.data.title}</div>
             </div>
-            <div className={styles.postTextContainer}>
+            <div className={styles.storeTextContainer}>
               {foodstore.data.desc}
             </div>
           </div>

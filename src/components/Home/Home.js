@@ -1,9 +1,7 @@
 import styles from "./Home.module.css";
-import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 import { getDocs, limit, query } from "firebase/firestore";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
-import { NavLink } from "react-router-dom";
 
 const Home = () => {
   const [foodstores, setFoodstores] = useState([]);
@@ -29,11 +27,11 @@ const Home = () => {
     <div className={styles.homePage}>
       {foodstores.map((foodstore) => {
         return (
-          <div className={styles.post}>
-            <div className={styles.postHeader}>
+          <div className={styles.store}>
+            <div className={styles.storeHeader}>
               <div className={styles.title}>{foodstore.data.title}</div>
             </div>
-            <div className={styles.postTextContainer}>
+            <div className={styles.storeTextContainer}>
               {" "}
               {foodstore.data.desc}{" "}
             </div>

@@ -8,7 +8,7 @@
   padding-top: 20px;
 }
 
-.dealsPage .post {
+.dealsPage .store {
   width: 600px;
   height: auto;
   max-height: 600px;
@@ -19,19 +19,19 @@
   border-radius: 15px;
 }
 
-.post .postHeader {
+.store .storeHeader {
   display: flex;
   justify-content: center;
   width: 100%;
 }
 
-.postHeader .title {
+.storeHeader .title {
   font-weight: 700;
   font-size: 30px;
   flex: 90%;
 }
 
-.post .postTextContainer {
+.store .storeTextContainer {
   word-wrap: break-word;
   height: auto;
   max-height: 400px;
