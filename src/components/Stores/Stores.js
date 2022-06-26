@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import styles from "./Stores.module.css";
+import { useEffect, useState } from "react";
 import { getDocs } from "firebase/firestore";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
 
@@ -22,13 +23,19 @@ const Stores = () => {
   };
 
   return (
-    <div>
-      {foodstores.map((foodstore) => (
-        <>
-          <h1> {foodstore.data.title}</h1>
-          <h2> {foodstore.data.desc} </h2>
-        </>
-      ))}
+    <div className={styles.storesPage}>
+      {foodstores.map((foodstore) => {
+        return (
+          <div className={styles.post}>
+            <div className={styles.postHeader}>
+              <div className={styles.title}>{foodstore.data.title}</div>
+            </div>
+            <div className={styles.postTextContainer}>
+              {foodstore.data.desc}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
