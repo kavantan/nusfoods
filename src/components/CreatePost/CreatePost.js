@@ -1,14 +1,25 @@
 import styles from "./CreatePost.module.css";
-import { useState } from "react";
-import { addDoc, serverTimestamp } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import {
+  addDoc,
+  serverTimestamp,
+  getDocs,
+  query,
+  orderBy,
+} from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
-import { postsCollectionRef } from "../../config/firebase.collections";
+import {
+  postsCollectionRef,
+  foodstoreCollectionRef,
+} from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
 
 const CreatePost = () => {
   const { user } = useAuth();
+  const [foodstores, setFoodstores] = useState([]);
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
+  const [foodStoreId, setFoodStoreId] = useState("");
 
   let navigate = useNavigate();
 
@@ -16,11 +27,29 @@ const CreatePost = () => {
     await addDoc(postsCollectionRef, {
       title,
       postText,
+      foodStoreId,
       author: { name: user.displayName, id: user.uid },
       createdAt: serverTimestamp(),
       createdAtString: new Date().toLocaleString(),
     });
     navigate("/forum");
+  };
+
+  useEffect(() => {
+    getFoodstores();
+  }, []);
+
+  const getFoodstores = () => {
+    const q = query(foodstoreCollectionRef, orderBy("title"));
+    getDocs(q)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setFoodstores(fs);
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -35,6 +64,20 @@ const CreatePost = () => {
               setTitle(event.target.value);
             }}
           />
+        </div>
+        <div className={styles.inputGp}>
+          <label>Food Store:</label>
+          <select
+            value={foodStoreId}
+            onChange={(event) => {
+              setFoodStoreId(event.target.value);
+            }}
+          >
+            <option value=""></option>
+            {foodstores.map((fs) => (
+              <option value={fs.id}>{fs.data.title}</option>
+            ))}
+          </select>
         </div>
         <div className={styles.inputGp}>
           <label>Post:</label>
