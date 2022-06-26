@@ -27,14 +27,6 @@ const Home = () => {
 
   return (
     <div className={styles.homePage}>
-      <div className={styles.button}>
-        <Button variant="contained">
-          <NavLink className={styles.button} to="/stores">
-            Check out other food stores!
-          </NavLink>
-        </Button>
-      </div>
-
       {foodstores.map((foodstore) => {
         return (
           <div className={styles.post}>
