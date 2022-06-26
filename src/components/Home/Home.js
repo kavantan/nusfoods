@@ -1,14 +1,15 @@
 import styles from "./Home.module.css";
-import placeholder from "../../assets/home-placeholder.png";
+import Button from "@mui/material/Button";
+import { NavLink } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div>
-      <img
-        src={placeholder}
-        alt="Please Log In"
-        className={styles.Center}
-      ></img>
+    <div className={styles.button}>
+      <Button variant="contained">
+        <NavLink className={styles.button} to="/stores">
+          Check out the stores!
+        </NavLink>
+      </Button>
     </div>
   );
 };
