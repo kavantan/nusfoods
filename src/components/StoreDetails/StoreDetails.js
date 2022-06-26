@@ -1,5 +1,5 @@
-const StoreDetails = () => {
-  return <div>Hello World!</div>;
+const StoreDetails = ({ storeDir }) => {
+  return <div>{storeDir}</div>;
 };
 
 export default StoreDetails;
