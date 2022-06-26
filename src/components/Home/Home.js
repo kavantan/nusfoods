@@ -4,10 +4,12 @@ import { getDocs, limit, query } from "firebase/firestore";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
 import Button from "@mui/material/Button";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, signInWithGoogle } = useAuth();
   const [foodstores, setFoodstores] = useState([]);
+  let navigate = useNavigate();
 
   useEffect(() => {
     getFoodstores();
@@ -46,7 +48,10 @@ const Home = () => {
       <div className={styles.featured}>Featured Store of the Day!</div>
       {foodstores.map((foodstore) => {
         return (
-          <div className={styles.store}>
+          <div
+            className={styles.store}
+            onClick={() => navigate("stores/" + foodstore.data.dir)}
+          >
             <div className={styles.storeHeader}>{foodstore.data.title}</div>
             <div className={styles.storeTextContainer}>
               {foodstore.data.desc}
