@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import styles from "./Deals.module.css";
+import { useEffect, useState } from "react";
 import { getDocs } from "firebase/firestore";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
 
@@ -7,7 +8,7 @@ const Deals = () => {
 
   useEffect(() => {
     getFoodstores();
-  }, []); // Runs on first render, might change later
+  }, []);
 
   const getFoodstores = () => {
     getDocs(foodstoreCollectionRef)
@@ -22,16 +23,19 @@ const Deals = () => {
   };
 
   return (
-    <div>
-      <u1>
-        {foodstores.map((foodstore) => (
-          <>
-            <h2> {foodstore.data.title}</h2>
-            <li> {foodstore.data.desc} </li>
-            <li>number of upvotes: {foodstore.data.upvotes}</li>
-          </>
-        ))}
-      </u1>
+    <div className={styles.dealsPage}>
+      {foodstores.map((foodstore) => {
+        return (
+          <div className={styles.post}>
+            <div className={styles.postHeader}>
+              <div className={styles.title}>{foodstore.data.title}</div>
+            </div>
+            <div className={styles.postTextContainer}>
+              {foodstore.data.desc}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 };
