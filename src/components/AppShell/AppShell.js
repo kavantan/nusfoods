@@ -227,7 +227,7 @@ const AppShell = () => {
                 aria-controls={menuId}
                 aria-haspopup="true"
                 onClick={handleProfileMenuOpen}
-                className={styles.button}
+                color="inherit"
               >
                 <AccountCircle />
               </IconButton>
@@ -240,7 +240,6 @@ const AppShell = () => {
               aria-controls={mobileMenuId}
               aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              className={styles.button}
             >
               <MoreIcon />
             </IconButton>

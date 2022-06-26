@@ -8,7 +8,7 @@ const Home = () => {
       <div className={styles.button}>
         <Button variant="contained">
           <NavLink className={styles.button} to="/stores">
-            Check out the stores!
+            Check out other food stores!
           </NavLink>
         </Button>
       </div>
