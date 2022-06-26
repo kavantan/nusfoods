@@ -37,13 +37,19 @@ function Forum() {
   return (
     <div className={styles.forumPage}>
       {user ? (
-        <div className={styles.button}>
-          <Button variant="contained">
-            <NavLink className={styles.button} to="/createpost">
-              Post a new review
-            </NavLink>
-          </Button>
-        </div>
+        <Button
+          style={{
+            borderRadius: 35,
+            backgroundColor: "#e1ad01",
+            padding: "14px 30px",
+            fontSize: "17px",
+          }}
+          variant="contained"
+        >
+          <NavLink className={styles.text} to="/createpost">
+            Post a new review
+          </NavLink>
+        </Button>
       ) : (
         <></>
       )}
