@@ -4,12 +4,14 @@ import { NavLink } from "react-router-dom";
 
 const Home = () => {
   return (
-    <div className={styles.button}>
-      <Button variant="contained">
-        <NavLink className={styles.button} to="/stores">
-          Check out the stores!
-        </NavLink>
-      </Button>
+    <div className={styles.homePage}>
+      <div className={styles.button}>
+        <Button variant="contained">
+          <NavLink className={styles.button} to="/stores">
+            Check out the stores!
+          </NavLink>
+        </Button>
+      </div>
     </div>
   );
 };
