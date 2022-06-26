@@ -127,7 +127,6 @@ const AppShell = () => {
       ) : (
         <>
           <MenuItem onClick={signInWithGoogle}>Login</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Sign Up</MenuItem>
         </>
       )}
     </Menu>
