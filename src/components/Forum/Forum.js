@@ -35,7 +35,7 @@ function Forum() {
   };
 
   return (
-    <div className={styles.homePage}>
+    <div className={styles.forumPage}>
       {user ? (
         <div className={styles.button}>
           <Button variant="contained">

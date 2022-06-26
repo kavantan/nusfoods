@@ -3,7 +3,7 @@
   color: inherit;
 }
 
-.homePage {
+.forumPage {
   width: 100%;
   min-height: calc(100vh - 80px);
   height: auto;
@@ -13,7 +13,7 @@
   padding-top: 20px;
 }
 
-.homePage .post {
+.forumPage .post {
   width: 600px;
   height: auto;
   max-height: 600px;
