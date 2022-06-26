@@ -3,7 +3,10 @@ import { useEffect, useState } from "react";
 import { getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth.js";
 import { db } from "../../config/firebaseConfig";
-import { postsCollectionRef } from "../../config/firebase.collections";
+import {
+  postsCollectionRef,
+  foodstoreCollectionRef,
+} from "../../config/firebase.collections";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
 import { NavLink } from "react-router-dom";
@@ -12,6 +15,7 @@ import Button from "@mui/material/Button";
 function Forum() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
+  const [foodstores, setFoodstores] = useState([]);
 
   useEffect(() => {
     getPosts();
@@ -32,6 +36,22 @@ function Forum() {
 
   const deletePost = (id) => {
     deleteDoc(doc(db, "posts", id));
+  };
+
+  useEffect(() => {
+    getFoodstores();
+  }, []);
+
+  const getFoodstores = () => {
+    getDocs(foodstoreCollectionRef)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setFoodstores(fs);
+      })
+      .catch((error) => console.log(error.message));
   };
 
   return (
@@ -71,6 +91,15 @@ function Forum() {
                   </Tooltip>
                 )}
               </div>
+            </div>
+            <div className={styles.foodStore}>
+              {foodstores.map((foodstore) => {
+                return (
+                  foodstore.id === post.data.foodStoreId && (
+                    <div>Store: {foodstore.data.title}</div>
+                  )
+                );
+              })}
             </div>
             <div className={styles.postTextContainer}>
               {" "}

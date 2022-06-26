@@ -51,6 +51,13 @@
   cursor: pointer;
 }
 
+.post .foodStore {
+  font-weight: 450;
+  font-size: 20px;
+  flex: 90%;
+  color: blue;
+}
+
 .post .postTextContainer {
   word-wrap: break-word;
   height: auto;
