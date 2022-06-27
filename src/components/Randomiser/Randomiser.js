@@ -1,8 +1,34 @@
 import CloseIcon from "@mui/icons-material/Close";
 import styles from "./Randomiser.module.css";
+import { useEffect, useState } from "react";
+import { getDocs } from "firebase/firestore";
+import { foodstoreCollectionRef } from "../../config/firebase.collections";
+import { useNavigate } from "react-router-dom";
 
 const Randomiser = ({ open, onClose }) => {
-  if (!open) return null;
+  const [foodstores, setFoodstores] = useState([]);
+  let navigate = useNavigate();
+
+  useEffect(() => {
+    if (open) {
+      getFoodstores();
+    }
+  }, [open]);
+
+  const getFoodstores = () => {
+    getDocs(foodstoreCollectionRef)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setFoodstores(fs);
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  if (!open) return <></>;
+
   return (
     <div onClick={onClose} className={styles.overlay}>
       <div
@@ -19,7 +45,18 @@ const Randomiser = ({ open, onClose }) => {
             Can't choose what to eat? Look no further!
           </div>
           <div className={styles.btnContainer}>
-            <button className={styles.btnPrimary}>
+            <button
+              className={styles.btnPrimary}
+              onClick={() => {
+                navigate(
+                  "/stores/" +
+                    foodstores[
+                      Math.floor(Math.random() * (foodstores.length + 1))
+                    ].data.dir
+                );
+                onClose();
+              }}
+            >
               Take me to a random food store!
             </button>
           </div>
