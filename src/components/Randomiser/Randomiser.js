@@ -27,42 +27,46 @@ const Randomiser = ({ open, onClose }) => {
       .catch((error) => console.log(error.message));
   };
 
-  if (!open) return <></>;
-
   return (
-    <div onClick={onClose} className={styles.overlay}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className={styles.randomContainer}
-      >
-        <div className={styles.randomRight}>
-          <p className={styles.closeBtn} onClick={onClose}>
-            <CloseIcon />
-          </p>
-          <div className={styles.content}>
-            Can't choose what to eat? Look no further!
-          </div>
-          <div className={styles.btnContainer}>
-            <button
-              className={styles.btnPrimary}
-              onClick={() => {
-                navigate(
-                  "/stores/" +
-                    foodstores[
-                      Math.floor(Math.random() * (foodstores.length + 1))
-                    ].data.dir
-                );
-                onClose();
-              }}
-            >
-              Take me to a random food store!
-            </button>
+    <>
+      {open ? (
+        <div onClick={onClose} className={styles.overlay}>
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
+            className={styles.randomContainer}
+          >
+            <div className={styles.randomRight}>
+              <p className={styles.closeBtn} onClick={onClose}>
+                <CloseIcon />
+              </p>
+              <div className={styles.content}>
+                Can't choose what to eat? Look no further!
+              </div>
+              <div className={styles.btnContainer}>
+                <button
+                  className={styles.btnPrimary}
+                  onClick={() => {
+                    navigate(
+                      "/stores/" +
+                        foodstores[
+                          Math.floor(Math.random() * (foodstores.length + 1))
+                        ].data.dir
+                    );
+                    onClose();
+                  }}
+                >
+                  Take me to a random food store!
+                </button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 
