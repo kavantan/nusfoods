@@ -39,6 +39,7 @@ function Forum() {
 
   const deletePost = (id) => {
     deleteDoc(doc(db, "posts", id));
+    window.location.reload();
   };
 
   const getFoodstores = () => {
