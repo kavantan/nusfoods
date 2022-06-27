@@ -123,6 +123,9 @@ const StoreDetails = ({ storeDir }) => {
                                 )}
                               </div>
                             </div>
+                            <div className={styles.storeName}>
+                              Store: {foodstore.data.title}
+                            </div>
                             <div className={styles.postTextContainer}>
                               {post.data.postText}
                             </div>
@@ -145,6 +148,9 @@ const StoreDetails = ({ storeDir }) => {
                               <div className={styles.title}>
                                 {deal.data.deal}
                               </div>
+                            </div>
+                            <div className={styles.storeName}>
+                              Store: {foodstore.data.title}
                             </div>
                             <div className={styles.postTextContainer}>
                               {deal.data.details}

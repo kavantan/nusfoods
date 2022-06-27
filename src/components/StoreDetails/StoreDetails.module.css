@@ -93,8 +93,11 @@
   font-size: 16px;
 }
 
-.clickable {
-  cursor: pointer;
+.post .storeName {
+  font-weight: 450;
+  font-size: 20px;
+  flex: 90%;
+  color: blue;
 }
 
 .deal {
@@ -118,4 +121,11 @@
   font-weight: 700;
   font-size: 30px;
   flex: 90%;
+}
+
+.deal .storeName {
+  font-weight: 450;
+  font-size: 20px;
+  flex: 90%;
+  color: red;
 }
