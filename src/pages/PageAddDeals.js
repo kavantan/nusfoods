@@ -1,11 +1,11 @@
-import AddDeals from "../components/AddDeals";
+import AddDeal from "../components/AddDeal";
 
-const PageAddDeals = () => {
+const PageAddDeal = () => {
   return (
     <div>
-      <AddDeals />
+      <AddDeal />
     </div>
   );
 };
 
-export default PageAddDeals;
+export default PageAddDeal;

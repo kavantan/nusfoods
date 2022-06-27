@@ -1,11 +1,11 @@
-import styles from "./AddStores.module.css";
+import styles from "./AddStore.module.css";
 import { useState } from "react";
 import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
 
-const AddStores = () => {
+const AddStore = () => {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -60,4 +60,4 @@ const AddStores = () => {
   );
 };
 
-export default AddStores;
+export default AddStore;

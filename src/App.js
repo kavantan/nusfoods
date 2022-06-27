@@ -7,7 +7,7 @@ import PageCreatePost from "./pages/PageCreatePost";
 import PageStores from "./pages/PageStores";
 import PageStoreDetails from "./pages/PageStoreDetails";
 import PageAddDeals from "./pages/PageAddDeals";
-import PageAddStores from "./pages/PageAddStores";
+import PageAddStore from "./pages/PageAddStore";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -22,8 +22,8 @@ function App() {
         <Route path="/createpost" element={<PageCreatePost />} />
         <Route path="/stores" element={<PageStores />} />
         <Route path="/stores/:storeId" element={<PageStoreDetails />}></Route>
-        <Route path="/adddeals" element={<PageAddDeals />} />
-        <Route path="/addstore" element={<PageAddStores />} />
+        <Route path="/adddeal" element={<PageAddDeals />} />
+        <Route path="/addstore" element={<PageAddStore />} />
       </Routes>
     </div>
   );

@@ -1,4 +1,4 @@
-import styles from "./AddDeals.module.css";
+import styles from "./AddDeal.module.css";
 import { useState, useEffect } from "react";
 import { addDoc, getDocs, query, orderBy } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ import {
 } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
 
-const AddDeals = () => {
+const AddDeal = () => {
   const { user } = useAuth();
   const [foodstores, setFoodstores] = useState([]);
   const [deal, setDeal] = useState("");
@@ -86,4 +86,4 @@ const AddDeals = () => {
   );
 };
 
-export default AddDeals;
+export default AddDeal;

@@ -134,30 +134,22 @@ const AppShell = () => {
     setAnchorEl2(null);
   };
 
-  const adminMenuId = "primary-search-account-menu";
+  const adminMenuId = "add-deals-stores-menu";
   const renderAdminMenu = (
     <Menu
       anchorEl2={anchorEl2}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
       id={adminMenuId}
       keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
       open={isAdminMenuOpen}
       onClose={handleAdminMenuClose}
     >
       <MenuItem>
         <NavLink
-          to="/adddeals"
+          to="/adddeal"
           style={{ textDecoration: "inherit", color: "inherit" }}
           onClick={handleAdminMenuClose}
         >
-          Add Deals
+          Add Deal
         </NavLink>
       </MenuItem>
       <MenuItem>
@@ -200,7 +192,7 @@ const AppShell = () => {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {user ? (
               <>
-                <Tooltip title="Add Deals">
+                <Tooltip title="Add Deals/Stores">
                   <IconButton
                     size="large"
                     edge="end"
