@@ -124,35 +124,6 @@ const StoreDetails = ({ storeDir }) => {
                   </select>
                 </div>
 
-                <div className={styles.cpContainer}>
-                  <h1>Leave a review!</h1>
-                  <div className={styles.inputGp}>
-                    <label>Title:</label>
-                    <input
-                      placeholder="Title..."
-                      onChange={(event) => {
-                        setTitle(event.target.value);
-                      }}
-                    />
-                  </div>
-                  <div className={styles.inputGp}>
-                    <label>Post:</label>
-                    <textarea
-                      placeholder="Post..."
-                      onChange={(event) => {
-                        setPostText(event.target.value);
-                      }}
-                    />
-                  </div>
-                  <button
-                    onClick={() => {
-                      createPost(foodstore);
-                    }}
-                  >
-                    Submit Post
-                  </button>
-                </div>
-
                 {postsOrDeals === "Posts" ? (
                   <div>
                     {posts.map((post) => {
@@ -191,6 +162,34 @@ const StoreDetails = ({ storeDir }) => {
                         )
                       );
                     })}
+                    <div className={styles.cpContainer}>
+                      <h1>Leave a review!</h1>
+                      <div className={styles.inputGp}>
+                        <label>Title:</label>
+                        <input
+                          placeholder="Title..."
+                          onChange={(event) => {
+                            setTitle(event.target.value);
+                          }}
+                        />
+                      </div>
+                      <div className={styles.inputGp}>
+                        <label>Post:</label>
+                        <textarea
+                          placeholder="Post..."
+                          onChange={(event) => {
+                            setPostText(event.target.value);
+                          }}
+                        />
+                      </div>
+                      <button
+                        onClick={() => {
+                          createPost(foodstore);
+                        }}
+                      >
+                        Submit Post
+                      </button>
+                    </div>
                   </div>
                 ) : (
                   <div>
