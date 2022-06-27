@@ -1,6 +1,14 @@
 import styles from "./StoreDetails.module.css";
 import { useEffect, useState } from "react";
-import { getDocs, query, orderBy, deleteDoc, doc } from "firebase/firestore";
+import {
+  getDocs,
+  query,
+  orderBy,
+  deleteDoc,
+  doc,
+  addDoc,
+  serverTimestamp,
+} from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import {
   dealsCollectionRef,
@@ -19,6 +27,10 @@ const StoreDetails = ({ storeDir }) => {
   const [posts, setPosts] = useState([]);
   const [deals, setDeals] = useState([]);
   const [postsOrDeals, setPostsOrDeals] = useState("Posts");
+
+  const [title, setTitle] = useState("");
+  const [postText, setPostText] = useState("");
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -26,6 +38,18 @@ const StoreDetails = ({ storeDir }) => {
     getPosts();
     getDeals();
   }, []);
+
+  const createPost = async (foodstore) => {
+    await addDoc(postsCollectionRef, {
+      title,
+      postText,
+      foodStoreId: foodstore.id,
+      author: { name: user.displayName, id: user.uid },
+      createdAt: serverTimestamp(),
+      createdAtString: new Date().toLocaleString(),
+    });
+    navigate("../stores/" + foodstore.data.dir);
+  };
 
   const getFoodstores = () => {
     getDocs(foodstoreCollectionRef)
@@ -99,6 +123,36 @@ const StoreDetails = ({ storeDir }) => {
                     <option value="Deals"> Show Deals</option>
                   </select>
                 </div>
+
+                <div className={styles.cpContainer}>
+                  <h1>Leave a review!</h1>
+                  <div className={styles.inputGp}>
+                    <label>Title:</label>
+                    <input
+                      placeholder="Title..."
+                      onChange={(event) => {
+                        setTitle(event.target.value);
+                      }}
+                    />
+                  </div>
+                  <div className={styles.inputGp}>
+                    <label>Post:</label>
+                    <textarea
+                      placeholder="Post..."
+                      onChange={(event) => {
+                        setPostText(event.target.value);
+                      }}
+                    />
+                  </div>
+                  <button
+                    onClick={() => {
+                      createPost(foodstore);
+                    }}
+                  >
+                    Submit Post
+                  </button>
+                </div>
+
                 {postsOrDeals === "Posts" ? (
                   <div>
                     {posts.map((post) => {
