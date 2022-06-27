@@ -55,6 +55,16 @@
   overflow-y: auto;
 }
 
+.store .storeTitle {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-weight: 700;
+  font-size: 40px;
+}
+
 .button {
   text-decoration: inherit;
   color: inherit;

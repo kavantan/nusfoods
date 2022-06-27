@@ -1,23 +1,40 @@
 import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { getDocs, limit, query } from "firebase/firestore";
-import { foodstoreCollectionRef } from "../../config/firebase.collections";
+import {
+  foodstoreCollectionRef,
+  dealsCollectionRef,
+} from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, signInWithGoogle } = useAuth();
+  const [deals, setDeals] = useState([]);
   const [foodstores, setFoodstores] = useState([]);
   let navigate = useNavigate();
 
   useEffect(() => {
+    getDeals();
     getFoodstores();
   }, []);
 
-  const getFoodstores = () => {
-    const q = query(foodstoreCollectionRef, limit(1));
+  const getDeals = () => {
+    const q = query(dealsCollectionRef, limit(1));
     getDocs(q)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setDeals(fs);
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  const getFoodstores = () => {
+    getDocs(foodstoreCollectionRef)
       .then((response) => {
         const fs = response.docs.map((doc) => ({
           data: doc.data(),
@@ -46,16 +63,23 @@ const Home = () => {
         </div>
       )}
       <div className={styles.featured}>Featured Deal of the Day!</div>
-      {foodstores.map((foodstore) => {
+      {deals.map((deal) => {
         return (
-          <div
-            className={styles.store}
-            onClick={() => navigate("stores/" + foodstore.data.dir)}
-          >
-            <div className={styles.storeHeader}>{foodstore.data.title}</div>
-            <div className={styles.storeTextContainer}>
-              {foodstore.data.desc}
-            </div>
+          <div className={styles.store}>
+            {foodstores.map((foodstore) => {
+              return (
+                foodstore.id === deal.data.foodStoreId && (
+                  <div
+                    className={styles.storeTitle}
+                    onClick={() => navigate("../stores/" + foodstore.data.dir)}
+                  >
+                    {foodstore.data.title}
+                  </div>
+                )
+              );
+            })}
+            <div className={styles.storeHeader}>{deal.data.deal}</div>
+            <div className={styles.storeTextContainer}>{deal.data.details}</div>
           </div>
         );
       })}
