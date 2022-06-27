@@ -16,6 +16,7 @@ import ForumIcon from "@mui/icons-material/Forum";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 import StoreIcon from "@mui/icons-material/Store";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import AddIcon from "@mui/icons-material/Add";
 import { Tooltip } from "@mui/material";
 import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -196,6 +197,16 @@ const AppShell = () => {
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             {user ? (
               <>
+                <Tooltip title="Add Deals">
+                  <IconButton
+                    size="large"
+                    aria-label="add deals"
+                    color="inherit"
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Tooltip>
+
                 <Tooltip title="Randomiser">
                   <IconButton
                     size="large"

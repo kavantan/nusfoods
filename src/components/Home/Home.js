@@ -45,7 +45,7 @@ const Home = () => {
           </Button>
         </div>
       )}
-      <div className={styles.featured}>Featured Store of the Day!</div>
+      <div className={styles.featured}>Featured Deal of the Day!</div>
       {foodstores.map((foodstore) => {
         return (
           <div
