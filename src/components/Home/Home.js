@@ -51,7 +51,7 @@ const Home = () => {
       {user ? (
         <></>
       ) : (
-        <div>
+        <div className={styles.pleaseLogIn}>
           <Button
             variant="contained"
             onClick={signInWithGoogle}
@@ -59,7 +59,7 @@ const Home = () => {
               backgroundColor: "#e1ad01",
             }}
           >
-            Please Log In{" "}
+            Please Log In
           </Button>
         </div>
       )}

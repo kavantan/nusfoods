@@ -8,6 +8,10 @@
   padding-top: 20px;
 }
 
+.homePage .pleaseLogIn {
+  padding-bottom: 10px;
+}
+
 .featured {
   height: 100px;
   display: inline-block;
