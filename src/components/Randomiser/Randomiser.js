@@ -30,7 +30,7 @@ const Randomiser = ({ open, onClose }) => {
   return (
     <>
       {open ? (
-        <div onClick={onClose} className={styles.overlay}>
+        <div className={styles.overlay} onClick={onClose}>
           <div
             onClick={(e) => {
               e.stopPropagation();
