@@ -28,6 +28,7 @@
   width: 100%;
   font-weight: 700;
   font-size: 30px;
+  color: blue;
 }
 
 .store .storeTextContainer {
@@ -41,4 +42,14 @@
   width: 100%;
   overflow: hidden;
   overflow-y: auto;
+}
+
+.store .storeTitle {
+  flex-direction: column;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-weight: 700;
+  font-size: 40px;
 }

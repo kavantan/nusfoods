@@ -1,16 +1,33 @@
 import styles from "./Deals.module.css";
 import { useEffect, useState } from "react";
 import { getDocs } from "firebase/firestore";
-import { foodstoreCollectionRef } from "../../config/firebase.collections";
+import {
+  dealsCollectionRef,
+  foodstoreCollectionRef,
+} from "../../config/firebase.collections";
 import { useNavigate } from "react-router-dom";
 
 const Deals = () => {
+  const [deals, setDeals] = useState([]);
   const [foodstores, setFoodstores] = useState([]);
   let navigate = useNavigate();
 
   useEffect(() => {
+    getDeals();
     getFoodstores();
   }, []);
+
+  const getDeals = () => {
+    getDocs(dealsCollectionRef)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setDeals(fs);
+      })
+      .catch((error) => console.log(error.message));
+  };
 
   const getFoodstores = () => {
     getDocs(foodstoreCollectionRef)
@@ -26,16 +43,23 @@ const Deals = () => {
 
   return (
     <div className={styles.dealsPage}>
-      {foodstores.map((foodstore) => {
+      {deals.map((deal) => {
         return (
-          <div
-            className={styles.store}
-            onClick={() => navigate("../stores/" + foodstore.data.dir)}
-          >
-            <div className={styles.storeHeader}>{foodstore.data.title}</div>
-            <div className={styles.storeTextContainer}>
-              {foodstore.data.desc}
-            </div>
+          <div className={styles.store}>
+            {foodstores.map((foodstore) => {
+              return (
+                foodstore.id === deal.data.foodStoreId && (
+                  <div
+                    className={styles.storeTitle}
+                    onClick={() => navigate("../stores/" + foodstore.data.dir)}
+                  >
+                    {foodstore.data.title}
+                  </div>
+                )
+              );
+            })}
+            <div className={styles.storeHeader}>{deal.data.deal}</div>
+            <div className={styles.storeTextContainer}>{deal.data.details}</div>
           </div>
         );
       })}
