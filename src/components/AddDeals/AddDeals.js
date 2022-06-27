@@ -51,7 +51,7 @@ const AddDeals = () => {
         <div className={styles.inputGp}>
           <label>Deal:</label>
           <input
-            placeholder="Deal..."
+            placeholder="Eg. 25% Off on selected Noodle Dishes"
             onChange={(event) => {
               setDeal(event.target.value);
             }}
@@ -74,7 +74,7 @@ const AddDeals = () => {
         <div className={styles.inputGp}>
           <label>Deal Details:</label>
           <textarea
-            placeholder="Deal Details..."
+            placeholder="Eg. 25% Off on selected noodle items: DanDanMian, Beef Noodles, Chinese Noodles"
             onChange={(event) => {
               setDetails(event.target.value);
             }}
