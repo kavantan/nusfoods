@@ -1,16 +1,27 @@
 import styles from "./StoreDetails.module.css";
 import { useEffect, useState } from "react";
-import { getDocs } from "firebase/firestore";
-import { foodstoreCollectionRef } from "../../config/firebase.collections";
+import { getDocs, query, orderBy, deleteDoc, doc } from "firebase/firestore";
+import { db } from "../../config/firebaseConfig";
+import {
+  foodstoreCollectionRef,
+  postsCollectionRef,
+} from "../../config/firebase.collections";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
+import { useAuth } from "../../hooks/useAuth.js";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { Tooltip } from "@mui/material";
 
 const StoreDetails = ({ storeDir }) => {
+  const { user } = useAuth();
   const [foodstores, setFoodstores] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [postsOrDeals, setPostsOrDeals] = useState("Posts");
   let navigate = useNavigate();
 
   useEffect(() => {
     getFoodstores();
+    getPosts();
   }, []);
 
   const getFoodstores = () => {
@@ -23,6 +34,23 @@ const StoreDetails = ({ storeDir }) => {
         setFoodstores(fs);
       })
       .catch((error) => console.log(error.message));
+  };
+
+  const getPosts = () => {
+    const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
+    getDocs(q)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setPosts(fs);
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  const deletePost = (id) => {
+    deleteDoc(doc(db, "posts", id));
   };
 
   return (
@@ -45,6 +73,56 @@ const StoreDetails = ({ storeDir }) => {
               <>
                 <div className={styles.storeTitle}>{foodstore.data.title}</div>
                 <div className={styles.storeDesc}>{foodstore.data.desc}</div>
+                <div>
+                  <select
+                    value={postsOrDeals}
+                    onChange={(event) => {
+                      setPostsOrDeals(event.target.value);
+                    }}
+                  >
+                    <option value="Posts"> Show Posts</option>
+                    <option value="Deals"> Show Deals</option>
+                  </select>
+                </div>
+                {postsOrDeals === "Posts" ? (
+                  <div>
+                    {posts.map((post) => {
+                      return (
+                        foodstore.id === post.data.foodStoreId && (
+                          <div className={styles.post}>
+                            <div className={styles.postHeader}>
+                              <div className={styles.title}>
+                                {post.data.title}
+                              </div>
+                              <div className={styles.deletePost}>
+                                {user && post.data.author.id === user.uid && (
+                                  <Tooltip title="Delete">
+                                    <button
+                                      onClick={() => {
+                                        deletePost(post.id);
+                                      }}
+                                    >
+                                      <DeleteIcon />
+                                    </button>
+                                  </Tooltip>
+                                )}
+                              </div>
+                            </div>
+                            <div className={styles.postTextContainer}>
+                              {post.data.postText}
+                            </div>
+                            <div className={styles.postedBy}>
+                              Posted by {post.data.author.name} on{" "}
+                              {post.data.createdAtString}
+                            </div>
+                          </div>
+                        )
+                      );
+                    })}
+                  </div>
+                ) : (
+                  <div>deals</div>
+                )}
               </>
             )
           );

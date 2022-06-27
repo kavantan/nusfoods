@@ -41,10 +41,6 @@ function Forum() {
     deleteDoc(doc(db, "posts", id));
   };
 
-  useEffect(() => {
-    getFoodstores();
-  }, []);
-
   const getFoodstores = () => {
     getDocs(foodstoreCollectionRef)
       .then((response) => {
@@ -111,10 +107,7 @@ function Forum() {
                 );
               })}
             </div>
-            <div className={styles.postTextContainer}>
-              {" "}
-              {post.data.postText}{" "}
-            </div>
+            <div className={styles.postTextContainer}>{post.data.postText}</div>
             <div className={styles.postedBy}>
               Posted by {post.data.author.name} on {post.data.createdAtString}
             </div>
