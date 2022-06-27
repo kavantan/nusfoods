@@ -96,3 +96,26 @@
 .clickable {
   cursor: pointer;
 }
+
+.deal {
+  width: 600px;
+  height: auto;
+  max-height: 600px;
+  background-color: #959492;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.deal .dealHeader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.dealHeader .title {
+  font-weight: 700;
+  font-size: 30px;
+  flex: 90%;
+}

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { getDocs, query, orderBy, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import {
+  dealsCollectionRef,
   foodstoreCollectionRef,
   postsCollectionRef,
 } from "../../config/firebase.collections";
@@ -16,12 +17,14 @@ const StoreDetails = ({ storeDir }) => {
   const { user } = useAuth();
   const [foodstores, setFoodstores] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [deals, setDeals] = useState([]);
   const [postsOrDeals, setPostsOrDeals] = useState("Posts");
   let navigate = useNavigate();
 
   useEffect(() => {
     getFoodstores();
     getPosts();
+    getDeals();
   }, []);
 
   const getFoodstores = () => {
@@ -45,6 +48,18 @@ const StoreDetails = ({ storeDir }) => {
           id: doc.id,
         }));
         setPosts(fs);
+      })
+      .catch((error) => console.log(error.message));
+  };
+
+  const getDeals = () => {
+    getDocs(dealsCollectionRef)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setDeals(fs);
       })
       .catch((error) => console.log(error.message));
   };
@@ -121,7 +136,24 @@ const StoreDetails = ({ storeDir }) => {
                     })}
                   </div>
                 ) : (
-                  <div>deals</div>
+                  <div>
+                    {deals.map((deal) => {
+                      return (
+                        foodstore.id === deal.data.foodStoreId && (
+                          <div className={styles.deal}>
+                            <div className={styles.dealHeader}>
+                              <div className={styles.title}>
+                                {deal.data.deal}
+                              </div>
+                            </div>
+                            <div className={styles.postTextContainer}>
+                              {deal.data.details}
+                            </div>
+                          </div>
+                        )
+                      );
+                    })}
+                  </div>
                 )}
               </>
             )
