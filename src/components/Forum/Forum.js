@@ -55,6 +55,7 @@ function Forum() {
 
   return (
     <div className={styles.forumPage}>
+      <div className={styles.featured}>Forum</div>
       {user ? (
         <Button
           style={{

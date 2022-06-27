@@ -43,6 +43,7 @@ const Deals = () => {
 
   return (
     <div className={styles.dealsPage}>
+      <div className={styles.featured}>Deals</div>
       {deals.map((deal) => {
         return (
           <div>

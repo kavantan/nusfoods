@@ -26,6 +26,7 @@ const Stores = () => {
 
   return (
     <div className={styles.storesPage}>
+      <div className={styles.featured}>Stores</div>
       {foodstores.map((foodstore) => {
         return (
           <div
