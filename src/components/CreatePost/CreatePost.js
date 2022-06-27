@@ -30,12 +30,7 @@ const CreatePost = () => {
       foodStoreId,
       author: { name: user.displayName, id: user.uid },
       createdAt: serverTimestamp(),
-      createdAtString: new Date().toLocaleString("en-us", {
-        weekday: "long",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      }),
+      createdAtString: new Date().toLocaleString(),
     });
     navigate("/forum");
   };
