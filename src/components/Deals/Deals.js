@@ -45,21 +45,26 @@ const Deals = () => {
     <div className={styles.dealsPage}>
       {deals.map((deal) => {
         return (
-          <div className={styles.store}>
+          <div>
             {foodstores.map((foodstore) => {
               return (
                 foodstore.id === deal.data.foodStoreId && (
                   <div
-                    className={styles.storeTitle}
+                    className={styles.store}
                     onClick={() => navigate("../stores/" + foodstore.data.dir)}
                   >
-                    {foodstore.data.title}
+                    <div className={styles.storeTitle}>
+                      {foodstore.data.title}
+                    </div>
+                    <div className={styles.storeHeader}>{deal.data.deal}</div>
+                    <div className={styles.storeTextContainer}>
+                      {" "}
+                      {deal.data.details}
+                    </div>
                   </div>
                 )
               );
             })}
-            <div className={styles.storeHeader}>{deal.data.deal}</div>
-            <div className={styles.storeTextContainer}>{deal.data.details}</div>
           </div>
         );
       })}
