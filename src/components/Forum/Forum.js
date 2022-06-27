@@ -21,6 +21,7 @@ function Forum() {
 
   useEffect(() => {
     getPosts();
+    getFoodstores();
   }, []);
 
   const getPosts = () => {
