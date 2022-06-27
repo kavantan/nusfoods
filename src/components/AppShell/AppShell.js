@@ -1,5 +1,4 @@
 import styles from "./AppShell.module.css";
-import * as React from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -65,8 +64,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 
 const AppShell = () => {
   const { signInWithGoogle, user, signout } = useAuth();
-  const [anchorEl, setAnchorEl] = useState(null);
+  const [openRandomiser, setOpenRandomiser] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState(null);
   const isMenuOpen = Boolean(anchorEl);
 
   const handleProfileMenuOpen = (event) => {
@@ -123,7 +123,54 @@ const AppShell = () => {
     </Menu>
   );
 
-  const [openRandomiser, setOpenRandomiser] = useState(false);
+  const [anchorEl2, setAnchorEl2] = useState(null);
+  const isAdminMenuOpen = Boolean(anchorEl2);
+
+  const handleAdminMenuOpen = (event) => {
+    setAnchorEl2(event.currentTarget);
+  };
+
+  const handleAdminMenuClose = () => {
+    setAnchorEl2(null);
+  };
+
+  const adminMenuId = "primary-search-account-menu";
+  const renderAdminMenu = (
+    <Menu
+      anchorEl2={anchorEl2}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={adminMenuId}
+      keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      open={isAdminMenuOpen}
+      onClose={handleAdminMenuClose}
+    >
+      <MenuItem>
+        <NavLink
+          to="/adddeals"
+          style={{ textDecoration: "inherit", color: "inherit" }}
+          onClick={handleAdminMenuClose}
+        >
+          Add Deals
+        </NavLink>
+      </MenuItem>
+      <MenuItem>
+        <NavLink
+          to="/addstore"
+          style={{ textDecoration: "inherit", color: "inherit" }}
+          onClick={handleAdminMenuClose}
+        >
+          Add Store
+        </NavLink>
+      </MenuItem>
+    </Menu>
+  );
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -156,12 +203,14 @@ const AppShell = () => {
                 <Tooltip title="Add Deals">
                   <IconButton
                     size="large"
-                    aria-label="add deals"
+                    edge="end"
+                    aria-label="add deals or store"
+                    aria-controls={adminMenuId}
+                    aria-haspopup="true"
+                    onClick={handleAdminMenuOpen}
                     color="inherit"
                   >
-                    <NavLink to="/adddeals" className={styles.button}>
-                      <AddIcon />
-                    </NavLink>
+                    <AddIcon />
                   </IconButton>
                 </Tooltip>
 
@@ -232,6 +281,7 @@ const AppShell = () => {
         </Toolbar>
       </AppBar>
       {renderMenu}
+      {renderAdminMenu}
       <Randomiser
         open={openRandomiser}
         onClose={() => setOpenRandomiser(false)}
