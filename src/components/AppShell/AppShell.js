@@ -203,7 +203,9 @@ const AppShell = () => {
                     aria-label="add deals"
                     color="inherit"
                   >
-                    <AddIcon />
+                    <NavLink to="/adddeals" className={styles.button}>
+                      <AddIcon />
+                    </NavLink>
                   </IconButton>
                 </Tooltip>
 
