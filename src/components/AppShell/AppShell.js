@@ -21,6 +21,7 @@ import { useState } from "react";
 import { useAuth } from "../../hooks/useAuth.js";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/nusfoodslogo.png";
+import Randomiser from "../Randomiser";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -165,6 +166,8 @@ const AppShell = () => {
     </Menu>
   );
 
+  const [openRandomiser, setOpenRandomiser] = useState(false);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar style={{ background: "#e1ad01" }} position="static">
@@ -198,6 +201,7 @@ const AppShell = () => {
                     size="large"
                     aria-label="get a random store"
                     color="inherit"
+                    onClick={() => setOpenRandomiser(true)}
                   >
                     <AutorenewIcon />
                   </IconButton>
@@ -271,6 +275,10 @@ const AppShell = () => {
       </AppBar>
       {renderMobileMenu}
       {renderMenu}
+      <Randomiser
+        open={openRandomiser}
+        onClose={() => setOpenRandomiser(false)}
+      />
     </Box>
   );
 };
