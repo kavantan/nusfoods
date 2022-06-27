@@ -137,9 +137,17 @@ const AppShell = () => {
   const adminMenuId = "add-deals-stores-menu";
   const renderAdminMenu = (
     <Menu
-      anchorEl2={anchorEl2}
-      id={adminMenuId}
+      anchorEl={anchorEl2}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
+      id={menuId}
       keepMounted
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "right",
+      }}
       open={isAdminMenuOpen}
       onClose={handleAdminMenuClose}
     >
