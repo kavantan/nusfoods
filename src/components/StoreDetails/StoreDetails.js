@@ -34,7 +34,7 @@ const StoreDetails = ({ storeDir }) => {
           style={{ backgroundColor: "#e1ad01" }}
           onClick={() => navigate("/stores")}
         >
-          Back to store
+          Back to stores
         </Button>
       </div>
 
