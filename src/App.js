@@ -6,6 +6,7 @@ import PageForum from "./pages/PageForum";
 import PageCreatePost from "./pages/PageCreatePost";
 import PageStores from "./pages/PageStores";
 import PageStoreDetails from "./pages/PageStoreDetails";
+import PageAddDeals from "./pages/PageAddDeals";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/createpost" element={<PageCreatePost />} />
         <Route path="/stores" element={<PageStores />} />
         <Route path="/stores/:storeId" element={<PageStoreDetails />}></Route>
+        <Route path="/adddeals" element={<PageAddDeals />} />
       </Routes>
     </div>
   );
