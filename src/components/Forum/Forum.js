@@ -110,6 +110,17 @@ function Forum() {
                 );
               })}
             </div>
+            <div>
+              {post.data.downloadURL !== "" ? (
+                <img
+                  src={post.data.downloadURL}
+                  alt="post"
+                  className={styles.image}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
             <div className={styles.postTextContainer}>{post.data.postText}</div>
             <div className={styles.postedBy}>
               Posted by {post.data.author.name} on {post.data.createdAtString}
