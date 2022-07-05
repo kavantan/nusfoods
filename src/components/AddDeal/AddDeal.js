@@ -14,17 +14,35 @@ const AddDeal = () => {
   const [deal, setDeal] = useState("");
   const [details, setDetails] = useState("");
   const [foodStoreId, setFoodStoreId] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   let navigate = useNavigate();
 
   const createPost = async () => {
-    await addDoc(dealsCollectionRef, {
-      deal,
-      details,
-      foodStoreId,
-      author: { name: user.displayName, id: user.uid },
-    });
-    navigate("/deals");
+    setFormErrors(validate());
+    if (Object.keys(validate()).length === 0) {
+      await addDoc(dealsCollectionRef, {
+        deal,
+        details,
+        foodStoreId,
+        author: { name: user.displayName, id: user.uid },
+      });
+      navigate("/deals");
+    }
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!deal) {
+      errors.deal = "Deal is required!";
+    }
+    if (!details) {
+      errors.details = "Deal details is required!";
+    }
+    if (!foodStoreId) {
+      errors.foodStoreId = "Food store is required!";
+    }
+    return errors;
   };
 
   useEffect(() => {
@@ -56,6 +74,7 @@ const AddDeal = () => {
               setDeal(event.target.value);
             }}
           />
+          <div className={styles.formValidation}>{formErrors.deal}</div>
         </div>
         <div className={styles.inputGp}>
           <label>Food Store:</label>
@@ -70,6 +89,7 @@ const AddDeal = () => {
               <option value={fs.id}>{fs.data.title}</option>
             ))}
           </select>
+          <div className={styles.formValidation}>{formErrors.foodStoreId}</div>
         </div>
         <div className={styles.inputGp}>
           <label>Deal Details:</label>
@@ -79,6 +99,7 @@ const AddDeal = () => {
               setDetails(event.target.value);
             }}
           />
+          <div className={styles.formValidation}>{formErrors.details}</div>
         </div>
         <button onClick={createPost}>Submit Deal</button>
       </div>
