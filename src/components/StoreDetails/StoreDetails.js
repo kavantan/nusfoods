@@ -32,6 +32,8 @@ const StoreDetails = ({ storeDir }) => {
   const [postText, setPostText] = useState("");
   const [randstate, setRandstate] = useState(0);
 
+  const [formErrors, setFormErrors] = useState({});
+
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -41,15 +43,18 @@ const StoreDetails = ({ storeDir }) => {
   }, [randstate]);
 
   const createPost = async (foodstore) => {
-    setRandstate(randstate + 1);
-    await addDoc(postsCollectionRef, {
-      title,
-      postText,
-      foodStoreId: foodstore.id,
-      author: { name: user.displayName, id: user.uid },
-      createdAt: serverTimestamp(),
-      createdAtString: new Date().toLocaleString(),
-    });
+    setFormErrors(validate());
+    if (Object.keys(validate()).length === 0) {
+      setRandstate(randstate + 1);
+      await addDoc(postsCollectionRef, {
+        title,
+        postText,
+        foodStoreId: foodstore.id,
+        author: { name: user.displayName, id: user.uid },
+        createdAt: serverTimestamp(),
+        createdAtString: new Date().toLocaleString(),
+      });
+    }
   };
 
   const getFoodstores = () => {
@@ -92,6 +97,17 @@ const StoreDetails = ({ storeDir }) => {
   const deletePost = (id) => {
     setRandstate(randstate + 1);
     deleteDoc(doc(db, "posts", id));
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!title) {
+      errors.title = "Title is required!";
+    }
+    if (!postText) {
+      errors.postText = "Post text is required!";
+    }
+    return errors;
   };
 
   return (
@@ -175,6 +191,9 @@ const StoreDetails = ({ storeDir }) => {
                               setTitle(event.target.value);
                             }}
                           />
+                          <div className={styles.formValidation}>
+                            {formErrors.title}
+                          </div>
                         </div>
                         <div className={styles.inputGp}>
                           <label>Post:</label>
@@ -184,6 +203,9 @@ const StoreDetails = ({ storeDir }) => {
                               setPostText(event.target.value);
                             }}
                           />
+                          <div className={styles.formValidation}>
+                            {formErrors.postText}
+                          </div>
                         </div>
                         <button
                           onClick={() => {
