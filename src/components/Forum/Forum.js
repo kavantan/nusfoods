@@ -17,12 +17,13 @@ function Forum() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [foodstores, setFoodstores] = useState([]);
+  const [randstate, setRandstate] = useState(0);
   let navigate = useNavigate();
 
   useEffect(() => {
     getPosts();
     getFoodstores();
-  }, []);
+  }, [randstate]);
 
   const getPosts = () => {
     const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
@@ -38,6 +39,7 @@ function Forum() {
   };
 
   const deletePost = (id) => {
+    setRandstate(randstate + 1);
     deleteDoc(doc(db, "posts", id));
   };
 
