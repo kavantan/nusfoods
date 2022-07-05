@@ -21,46 +21,19 @@ export const useAuth = () => {
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  // Wrap any Firebase methods we want to use making sure ...
-  // ... to save the user to state.
-  const signin = (email, password) => {
-    return firebaseAuth
-      .signInWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
-      });
-  };
-
-  const signup = (email, password) => {
-    return firebaseAuth
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
-        setUser(response.user);
-        return response.user;
-      });
-  };
-
   const signout = () => {
     return firebaseAuth.signOut().then(() => {
       setUser(false);
     });
   };
 
-  const sendPasswordResetEmail = (email) => {
-    return firebaseAuth.sendPasswordResetEmail(email).then(() => {
-      return true;
-    });
-  };
-
-  const confirmPasswordReset = (code, password) => {
-    return firebaseAuth.confirmPasswordReset(code, password).then(() => {
-      return true;
-    });
-  };
-
   const signInWithGoogle = () => {
-    return signInWithPopup(firebaseAuth, googleAuthProvider);
+    return signInWithPopup(
+      firebaseAuth,
+      googleAuthProvider.setCustomParameters({
+        prompt: "select_account",
+      })
+    );
   };
 
   // Subscribe to user on mount
@@ -83,11 +56,7 @@ function useProvideAuth() {
   // Return the user object and auth methods
   return {
     user,
-    signin,
-    signup,
     signout,
-    sendPasswordResetEmail,
-    confirmPasswordReset,
     signInWithGoogle,
   };
 }
