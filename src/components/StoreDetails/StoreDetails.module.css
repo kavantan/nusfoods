@@ -181,3 +181,12 @@ input,
 textarea {
   margin-top: 5px;
 }
+
+.endOfDeals {
+  padding-top: 20px;
+  height: 100px;
+  display: flex;
+  font-size: 40px;
+  line-height: 84%;
+  font-family: Modak;
+}

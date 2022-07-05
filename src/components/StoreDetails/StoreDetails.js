@@ -218,6 +218,7 @@ const StoreDetails = ({ storeDir }) => {
                         )
                       );
                     })}
+                    <div className={styles.endOfDeals}>- End of Deals -</div>
                   </div>
                 )}
               </>
