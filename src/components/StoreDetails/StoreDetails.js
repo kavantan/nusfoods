@@ -30,6 +30,7 @@ const StoreDetails = ({ storeDir }) => {
 
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
+  const [randstate, setRandstate] = useState(0);
 
   let navigate = useNavigate();
 
@@ -37,9 +38,10 @@ const StoreDetails = ({ storeDir }) => {
     getFoodstores();
     getPosts();
     getDeals();
-  }, []);
+  }, [randstate]);
 
   const createPost = async (foodstore) => {
+    setRandstate(randstate + 1);
     await addDoc(postsCollectionRef, {
       title,
       postText,
@@ -48,7 +50,6 @@ const StoreDetails = ({ storeDir }) => {
       createdAt: serverTimestamp(),
       createdAtString: new Date().toLocaleString(),
     });
-    navigate("../stores/" + foodstore.data.dir);
   };
 
   const getFoodstores = () => {
@@ -89,6 +90,7 @@ const StoreDetails = ({ storeDir }) => {
   };
 
   const deletePost = (id) => {
+    setRandstate(randstate + 1);
     deleteDoc(doc(db, "posts", id));
   };
 
