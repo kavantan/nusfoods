@@ -56,3 +56,9 @@ input,
 textarea {
   margin-top: 5px;
 }
+
+.formValidation {
+  color: black;
+  justify-content: center;
+  display: flex;
+}

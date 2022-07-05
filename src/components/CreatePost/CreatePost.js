@@ -20,19 +20,34 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [foodStoreId, setFoodStoreId] = useState("");
+  const [formErrors, setFormErrors] = useState({});
 
   let navigate = useNavigate();
 
   const createPost = async () => {
-    await addDoc(postsCollectionRef, {
-      title,
-      postText,
-      foodStoreId,
-      author: { name: user.displayName, id: user.uid },
-      createdAt: serverTimestamp(),
-      createdAtString: new Date().toLocaleString(),
-    });
-    navigate("/forum");
+    setFormErrors(validate());
+    if (Object.keys(validate()).length === 0) {
+      await addDoc(postsCollectionRef, {
+        title,
+        postText,
+        foodStoreId,
+        author: { name: user.displayName, id: user.uid },
+        createdAt: serverTimestamp(),
+        createdAtString: new Date().toLocaleString(),
+      });
+      navigate("/forum");
+    }
+  };
+
+  const validate = () => {
+    const errors = {};
+    if (!title) {
+      errors.title = "Title is required!";
+    }
+    if (!postText) {
+      errors.postText = "Post Text is required!";
+    }
+    return errors;
   };
 
   useEffect(() => {
@@ -64,6 +79,7 @@ const CreatePost = () => {
               setTitle(event.target.value);
             }}
           />
+          <div className={styles.formValidation}>{formErrors.title}</div>
         </div>
         <div className={styles.inputGp}>
           <label>Food Store:</label>
@@ -87,6 +103,7 @@ const CreatePost = () => {
               setPostText(event.target.value);
             }}
           />
+          <div className={styles.formValidation}>{formErrors.title}</div>
         </div>
         <button onClick={createPost}>Submit Post</button>
       </div>
