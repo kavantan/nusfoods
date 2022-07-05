@@ -1,4 +1,5 @@
 import styles from "./CreatePost.module.css";
+import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import {
   addDoc,
@@ -13,6 +14,9 @@ import {
   foodstoreCollectionRef,
 } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../config/firebaseConfig.js";
+import { v4 } from "uuid";
 
 const CreatePost = () => {
   const { user } = useAuth();
@@ -20,9 +24,22 @@ const CreatePost = () => {
   const [title, setTitle] = useState("");
   const [postText, setPostText] = useState("");
   const [foodStoreId, setFoodStoreId] = useState("");
+  const [downloadURL, setDownloadURL] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
   let navigate = useNavigate();
+
+  const [imageUpload, setImageUpload] = useState(null);
+
+  const uploadFile = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setDownloadURL(url);
+      });
+    });
+  };
 
   const createPost = async () => {
     setFormErrors(validate());
@@ -31,6 +48,7 @@ const CreatePost = () => {
         title,
         postText,
         foodStoreId,
+        downloadURL,
         author: { name: user.displayName, id: user.uid },
         createdAt: serverTimestamp(),
         createdAtString: new Date().toLocaleString(),
@@ -80,6 +98,23 @@ const CreatePost = () => {
             }}
           />
           <div className={styles.formValidation}>{formErrors.title}</div>
+        </div>
+        <div className={styles.inputGp}>
+          <label>Image (Optional):</label>
+          <input
+            type="file"
+            onChange={(event) => {
+              setImageUpload(event.target.files[0]);
+            }}
+          />
+          <Button
+            variant="contained"
+            component="span"
+            onClick={uploadFile}
+            style={{ backgroundColor: "#42413d" }}
+          >
+            Upload Image
+          </Button>
         </div>
         <div className={styles.inputGp}>
           <label>Food Store:</label>
