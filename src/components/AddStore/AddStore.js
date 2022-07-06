@@ -1,18 +1,35 @@
 import styles from "./AddStore.module.css";
+import Button from "@mui/material/Button";
 import { useState } from "react";
 import { addDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../config/firebaseConfig.js";
+import { v4 } from "uuid";
 
 const AddStore = () => {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [dir, setDir] = useState("");
+  const [downloadURL, setDownloadURL] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
   let navigate = useNavigate();
+
+  const [imageUpload, setImageUpload] = useState(null);
+
+  const uploadFile = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `stores/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setDownloadURL(url);
+      });
+    });
+  };
 
   const createPost = async () => {
     setFormErrors(validate());
@@ -21,6 +38,7 @@ const AddStore = () => {
         title,
         desc,
         dir,
+        downloadURL,
         author: { name: user.displayName, id: user.uid },
       });
       navigate("/stores");
@@ -64,6 +82,23 @@ const AddStore = () => {
             }}
           />
           <div className={styles.formValidation}>{formErrors.dir}</div>
+        </div>
+        <div className={styles.inputGp}>
+          <label>Store Image (Optional):</label>
+          <input
+            type="file"
+            onChange={(event) => {
+              setImageUpload(event.target.files[0]);
+            }}
+          />
+          <Button
+            variant="contained"
+            component="span"
+            onClick={uploadFile}
+            style={{ backgroundColor: "#42413d" }}
+          >
+            Upload Image
+          </Button>
         </div>
         <div className={styles.inputGp}>
           <label>Store Description:</label>
