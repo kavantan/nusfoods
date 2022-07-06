@@ -129,6 +129,17 @@ const StoreDetails = ({ storeDir }) => {
             foodstore.data.dir === storeDir && (
               <>
                 <div className={styles.storeTitle}>{foodstore.data.title}</div>
+                <div>
+                  {foodstore.data.downloadURL !== "" ? (
+                    <img
+                      src={foodstore.data.downloadURL}
+                      alt="foodstore"
+                      className={styles.image}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <div className={styles.storeDesc}>{foodstore.data.desc}</div>
                 <div>
                   <select
