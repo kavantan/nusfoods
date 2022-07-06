@@ -34,6 +34,17 @@ const Stores = () => {
             onClick={() => navigate(foodstore.data.dir)}
           >
             <div className={styles.storeHeader}>{foodstore.data.title}</div>
+            <div>
+              {foodstore.data.downloadURL !== "" ? (
+                <img
+                  src={foodstore.data.downloadURL}
+                  alt="foodstore"
+                  className={styles.image}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
             <div className={styles.storeTextContainer}>
               {foodstore.data.desc}
             </div>
