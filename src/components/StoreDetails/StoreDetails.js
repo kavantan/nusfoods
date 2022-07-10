@@ -20,6 +20,9 @@ import Button from "@mui/material/Button";
 import { useAuth } from "../../hooks/useAuth.js";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Tooltip } from "@mui/material";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "../../config/firebaseConfig.js";
+import { v4 } from "uuid";
 
 const StoreDetails = ({ storeDir }) => {
   const { user } = useAuth();
@@ -32,7 +35,9 @@ const StoreDetails = ({ storeDir }) => {
   const [postText, setPostText] = useState("");
   const [randstate, setRandstate] = useState(0);
 
+  const [downloadURL, setDownloadURL] = useState("");
   const [formErrors, setFormErrors] = useState({});
+  const [imageUpload, setImageUpload] = useState(null);
 
   let navigate = useNavigate();
 
@@ -42,6 +47,16 @@ const StoreDetails = ({ storeDir }) => {
     getDeals();
   }, [randstate]);
 
+  const uploadFile = () => {
+    if (imageUpload == null) return;
+    const imageRef = ref(storage, `images/${imageUpload.name + v4()}`);
+    uploadBytes(imageRef, imageUpload).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((url) => {
+        setDownloadURL(url);
+      });
+    });
+  };
+
   const createPost = async (foodstore) => {
     setFormErrors(validate());
     if (Object.keys(validate()).length === 0) {
@@ -50,6 +65,7 @@ const StoreDetails = ({ storeDir }) => {
         title,
         postText,
         foodStoreId: foodstore.id,
+        downloadURL,
         author: { name: user.displayName, id: user.uid },
         createdAt: serverTimestamp(),
         createdAtString: new Date().toLocaleString(),
@@ -180,6 +196,17 @@ const StoreDetails = ({ storeDir }) => {
                             <div className={styles.storeName}>
                               Store: {foodstore.data.title}
                             </div>
+                            <div>
+                              {post.data.downloadURL !== "" ? (
+                                <img
+                                  src={post.data.downloadURL}
+                                  alt="post"
+                                  className={styles.image2}
+                                />
+                              ) : (
+                                <></>
+                              )}
+                            </div>
                             <div className={styles.postTextContainer}>
                               {post.data.postText}
                             </div>
@@ -205,6 +232,23 @@ const StoreDetails = ({ storeDir }) => {
                           <div className={styles.formValidation}>
                             {formErrors.title}
                           </div>
+                        </div>
+                        <div className={styles.inputGp}>
+                          <label>Image (Optional):</label>
+                          <input
+                            type="file"
+                            onChange={(event) => {
+                              setImageUpload(event.target.files[0]);
+                            }}
+                          />
+                          <Button
+                            variant="contained"
+                            component="span"
+                            onClick={uploadFile}
+                            style={{ backgroundColor: "#42413d" }}
+                          >
+                            Upload Image
+                          </Button>
                         </div>
                         <div className={styles.inputGp}>
                           <label>Post:</label>
