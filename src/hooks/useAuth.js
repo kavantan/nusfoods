@@ -1,6 +1,10 @@
 import { signInWithPopup } from "firebase/auth";
 import React, { useState, useEffect, useContext, createContext } from "react";
-import { firebaseAuth, googleAuthProvider } from "../config/firebaseConfig.js";
+import {
+  firebaseAuth,
+  googleAuthProvider,
+  createUserDocument,
+} from "../config/firebaseConfig.js";
 
 const authContext = createContext();
 
@@ -44,6 +48,7 @@ function useProvideAuth() {
     const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+        createUserDocument(user);
       } else {
         setUser(false);
       }
