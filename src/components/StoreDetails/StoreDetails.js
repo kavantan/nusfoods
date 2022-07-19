@@ -11,6 +11,7 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config/firebaseConfig";
 import {
+  usersCollectionRef,
   dealsCollectionRef,
   foodstoreCollectionRef,
   postsCollectionRef,
@@ -39,12 +40,15 @@ const StoreDetails = ({ storeDir }) => {
   const [formErrors, setFormErrors] = useState({});
   const [imageUpload, setImageUpload] = useState(null);
 
+  const [usersData, setUsersData] = useState([]);
+
   let navigate = useNavigate();
 
   useEffect(() => {
     getFoodstores();
     getPosts();
     getDeals();
+    getUsers();
   }, [randstate]);
 
   const uploadFile = () => {
@@ -71,6 +75,19 @@ const StoreDetails = ({ storeDir }) => {
         createdAtString: new Date().toLocaleString(),
       });
     }
+  };
+
+  const getUsers = () => {
+    const q = query(usersCollectionRef);
+    getDocs(q)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setUsersData(fs);
+      })
+      .catch((error) => console.log(error.message));
   };
 
   const getFoodstores = () => {
@@ -211,8 +228,23 @@ const StoreDetails = ({ storeDir }) => {
                               {post.data.postText}
                             </div>
                             <div className={styles.postedBy}>
-                              Posted by {post.data.author.name} on{" "}
-                              {post.data.createdAtString}
+                              {usersData.map((userData) => {
+                                return (
+                                  userData.id === post.data.author.id && (
+                                    <div
+                                      className={styles.clickable}
+                                      onClick={() =>
+                                        navigate(
+                                          "../users/" + userData.data.dir
+                                        )
+                                      }
+                                    >
+                                      Posted by {userData.data.name} on{" "}
+                                      {post.data.createdAtString}
+                                    </div>
+                                  )
+                                );
+                              })}
                             </div>
                           </div>
                         )
