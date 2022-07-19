@@ -75,6 +75,8 @@ const StoreDetails = ({ storeDir }) => {
         createdAtString: new Date().toLocaleString(),
       });
     }
+    setTitle("");
+    setPostText("");
   };
 
   const getUsers = () => {
