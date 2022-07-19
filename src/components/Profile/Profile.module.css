@@ -33,6 +33,8 @@
 }
 
 .profilePic {
+  height: 96px;
+  width: 96px;
   margin: 20px;
   display: block;
   margin-left: auto;
