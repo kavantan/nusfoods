@@ -4,6 +4,7 @@ import { getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth.js";
 import { db } from "../../config/firebaseConfig";
 import {
+  usersCollectionRef,
   postsCollectionRef,
   foodstoreCollectionRef,
 } from "../../config/firebase.collections";
@@ -17,13 +18,28 @@ function Forum() {
   const { user } = useAuth();
   const [posts, setPosts] = useState([]);
   const [foodstores, setFoodstores] = useState([]);
+  const [usersData, setUsersData] = useState([]);
   const [randstate, setRandstate] = useState(0);
   let navigate = useNavigate();
 
   useEffect(() => {
+    getUsers();
     getPosts();
     getFoodstores();
   }, [randstate]);
+
+  const getUsers = () => {
+    const q = query(usersCollectionRef);
+    getDocs(q)
+      .then((response) => {
+        const fs = response.docs.map((doc) => ({
+          data: doc.data(),
+          id: doc.id,
+        }));
+        setUsersData(fs);
+      })
+      .catch((error) => console.log(error.message));
+  };
 
   const getPosts = () => {
     const q = query(postsCollectionRef, orderBy("createdAt", "desc"));
@@ -123,7 +139,19 @@ function Forum() {
             </div>
             <div className={styles.postTextContainer}>{post.data.postText}</div>
             <div className={styles.postedBy}>
-              Posted by {post.data.author.name} on {post.data.createdAtString}
+              {usersData.map((userData) => {
+                return (
+                  userData.id === post.data.author.id && (
+                    <div
+                      className={styles.clickable}
+                      onClick={() => navigate("../users/" + userData.data.dir)}
+                    >
+                      Posted by {userData.data.name} on{" "}
+                      {post.data.createdAtString}
+                    </div>
+                  )
+                );
+              })}
             </div>
           </div>
         );
