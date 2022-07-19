@@ -22,6 +22,7 @@
 .row .displayName {
   flex: 9;
   height: 100px;
+  white-space: nowrap;
   padding-left: 20px;
   display: inline-block;
   font-size: 100px;
