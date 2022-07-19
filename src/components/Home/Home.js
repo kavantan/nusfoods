@@ -1,41 +1,24 @@
 import styles from "./Home.module.css";
 import { useEffect, useState } from "react";
 import { getDocs, limit, query } from "firebase/firestore";
-import {
-  foodstoreCollectionRef,
-  dealsCollectionRef,
-} from "../../config/firebase.collections";
+import { foodstoreCollectionRef } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const { user, signInWithGoogle } = useAuth();
-  const [deals, setDeals] = useState([]);
   const [foodstores, setFoodstores] = useState([]);
 
   let navigate = useNavigate();
 
   useEffect(() => {
-    getDeals();
     getFoodstores();
   }, []);
 
-  const getDeals = () => {
-    const q = query(dealsCollectionRef, limit(1));
-    getDocs(q)
-      .then((response) => {
-        const fs = response.docs.map((doc) => ({
-          data: doc.data(),
-          id: doc.id,
-        }));
-        setDeals(fs);
-      })
-      .catch((error) => console.log(error.message));
-  };
-
   const getFoodstores = () => {
-    getDocs(foodstoreCollectionRef)
+    const q = query(foodstoreCollectionRef, limit(1));
+    getDocs(q)
       .then((response) => {
         const fs = response.docs.map((doc) => ({
           data: doc.data(),
@@ -63,29 +46,28 @@ const Home = () => {
           </Button>
         </div>
       )}
-      <div className={styles.featured}>Featured Deal of the Day!</div>
-      {deals.map((deal) => {
+      <div className={styles.featured}>Featured Store of the Day!</div>
+      {foodstores.map((foodstore) => {
         return (
-          <div>
-            {foodstores.map((foodstore) => {
-              return (
-                foodstore.id === deal.data.foodStoreId && (
-                  <div
-                    className={styles.store}
-                    onClick={() => navigate("../stores/" + foodstore.data.dir)}
-                  >
-                    <div className={styles.storeTitle}>
-                      {foodstore.data.title}
-                    </div>
-                    <div className={styles.storeHeader}>{deal.data.deal}</div>
-                    <div className={styles.storeTextContainer}>
-                      {" "}
-                      {deal.data.details}
-                    </div>
-                  </div>
-                )
-              );
-            })}
+          <div
+            className={styles.store}
+            onClick={() => navigate(foodstore.data.dir)}
+          >
+            <div className={styles.storeHeader}>{foodstore.data.title}</div>
+            <div>
+              {foodstore.data.downloadURL !== "" ? (
+                <img
+                  src={foodstore.data.downloadURL}
+                  alt="foodstore"
+                  className={styles.image}
+                />
+              ) : (
+                <></>
+              )}
+            </div>
+            <div className={styles.storeTextContainer}>
+              {foodstore.data.desc}
+            </div>
           </div>
         );
       })}
