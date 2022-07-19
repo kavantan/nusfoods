@@ -11,6 +11,7 @@ import { db } from "../../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import Button from "@mui/material/Button";
 
 const Profile = () => {
   const { user } = useAuth();
@@ -90,8 +91,19 @@ const Profile = () => {
                 </div>
                 <div className={styles.displayName}>{userData.data.name}</div>
               </div>
+              <div className={styles.button}>
+                <Button
+                  variant="contained"
+                  size="medium"
+                  style={{ backgroundColor: "#e1ad01" }}
+                  onClick={() => navigate("/editprofile")}
+                >
+                  Edit profile
+                </Button>
+              </div>
               <div className={styles.biography}>
-                About me: {userData.data.biography}
+                About me:{" "}
+                {userData.data.biography === "" ? "-" : userData.data.biography}
               </div>
               <div>
                 {posts.map((post) => {
