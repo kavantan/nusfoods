@@ -51,7 +51,7 @@ const Home = () => {
         return (
           <div
             className={styles.store}
-            onClick={() => navigate(foodstore.data.dir)}
+            onClick={() => navigate("../stores/" + foodstore.data.dir)}
           >
             <div className={styles.storeHeader}>{foodstore.data.title}</div>
             <div>
