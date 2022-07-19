@@ -40,6 +40,13 @@
   font-family: Arial, Helvetica, sans-serif;
 }
 
+.checkboxes {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .btnContainer {
   display: flex;
   padding: 1rem 1rem;
