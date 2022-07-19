@@ -30,7 +30,11 @@ export const createUserDocument = async (user) => {
   await runTransaction(db, async (transaction) => {
     const sfDoc = await transaction.get(userRef);
     if (!sfDoc.exists()) {
-      setDoc(userRef, { name: user?.displayName });
+      setDoc(userRef, {
+        name: user?.displayName,
+        downloadURL: user?.photoURL,
+        biography: "",
+      });
     }
   });
 };

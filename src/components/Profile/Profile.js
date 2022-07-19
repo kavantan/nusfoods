@@ -76,7 +76,23 @@ const Profile = () => {
         return (
           userData.id === user.uid && (
             <>
-              <div className={styles.displayName}>{userData.data.name}</div>
+              <div className={styles.row}>
+                <div className={styles.pic}>
+                  {userData.data.downloadURL !== "" ? (
+                    <img
+                      src={userData.data.downloadURL}
+                      alt="profile pic"
+                      className={styles.profilePic}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </div>
+                <div className={styles.displayName}>{userData.data.name}</div>
+              </div>
+              <div className={styles.biography}>
+                About me: {userData.data.biography}
+              </div>
               <div>
                 {posts.map((post) => {
                   return (
