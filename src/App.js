@@ -9,6 +9,7 @@ import PageStoreDetails from "./pages/PageStoreDetails";
 import PageAddDeals from "./pages/PageAddDeals";
 import PageAddStore from "./pages/PageAddStore";
 import PageEditProfile from "./pages/PageEditProfile";
+import PageUserDetails from "./pages/PageUserDetails";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/adddeal" element={<PageAddDeals />} />
         <Route path="/addstore" element={<PageAddStore />} />
         <Route path="/editprofile" element={<PageEditProfile />} />
+        <Route path="/users/:username" element={<PageUserDetails />}></Route>
       </Routes>
     </div>
   );

@@ -1,0 +1,127 @@
+@import url("https://fonts.googleapis.com/css?family=Modak");
+
+.profilePage {
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+}
+
+.profilePage .row {
+  display: flex;
+  height: 100%;
+}
+
+.row .pic {
+  flex: 1;
+}
+
+.row .displayName {
+  flex: 9;
+  height: 100px;
+  padding-left: 20px;
+  display: inline-block;
+  font-size: 100px;
+  font-family: Modak;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='200px' height='200px' viewBox='0 0 400 400'%3e%3cdefs%3e%3cfilter id='filter' width='400px' height='400px' filterUnits='objectBoundingBox' primitiveUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3e%3cfeFlood flood-color='%23f5576c' flood-opacity='1' x='0' y='0' width='250px' height='250px' result='flood3'%3e%3c/feFlood%3e%3cfeFlood flood-color='%23f093fb' flood-opacity='1' x='150px' y='150px' width='250px' height='250px' result='flood4'%3e%3c/feFlood%3e%3cfeGaussianBlur stdDeviation='50 50' x='0%25' y='0%25' width='100%25' height='100%25' in='flood3' edgeMode='none' result='blur1'%3e%3c/feGaussianBlur%3e%3cfeGaussianBlur stdDeviation='50 50' x='0%25' y='0%25' width='100%25' height='100%25' in='flood4' edgeMode='none' result='blur2'%3e%3c/feGaussianBlur%3e%3cfeBlend mode='normal' x='0%25' y='0%25' width='100%25' height='100%25' in='blur2' in2='SourceGraphic' result='blend5'%3e%3c/feBlend%3e%3cfeBlend mode='normal' x='0%25' y='0%25' width='100%25' height='100%25' in='blur1' in2='blend5' result='blend6'%3e%3c/feBlend%3e%3c/filter%3e%3c/defs%3e%3crect width='400' height='400' x='0' y='0' fill='%23fee140' filter='url(%23filter)'%3e%3c/rect%3e%3c/svg%3e");
+}
+
+.profilePic {
+  height: 96px;
+  width: 96px;
+  margin: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profilePage .biography {
+  padding-top: 20px;
+  display: inline-block;
+  font-size: 30px;
+  color: #e1ad01;
+}
+
+.profilePage .text {
+  text-decoration: inherit;
+  color: inherit;
+}
+
+.profilePage .post {
+  width: 600px;
+  height: auto;
+  max-height: 600px;
+  background-color: #959492;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 15px;
+}
+
+.post .postHeader {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.postHeader .title {
+  font-weight: 700;
+  font-size: 30px;
+  flex: 90%;
+}
+
+.postHeader .deletePost {
+  flex: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.deletePost button {
+  border: none;
+
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.post .foodStore {
+  font-weight: 450;
+  font-size: 20px;
+  flex: 90%;
+  color: blue;
+}
+
+.image {
+  width: 500px;
+  max-height: 300px;
+  margin: 20px;
+  border-radius: 25px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post .postTextContainer {
+  word-wrap: break-word;
+  height: auto;
+  max-height: 400px;
+  width: 100%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+.post .postedBy {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.clickable {
+  cursor: pointer;
+}
