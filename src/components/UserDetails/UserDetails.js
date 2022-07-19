@@ -109,6 +109,7 @@ const UserDetails = ({ username }) => {
                 About me:{" "}
                 {userData.data.biography === "" ? "-" : userData.data.biography}
               </div>
+              <div className={styles.myReviews}>Reviews that I wrote:</div>
               <div>
                 {posts.map((post) => {
                   return (
