@@ -15,6 +15,7 @@ const AddStore = () => {
   const [desc, setDesc] = useState("");
   const [dir, setDir] = useState("");
   const [downloadURL, setDownloadURL] = useState("");
+  const [location, setLocation] = useState("");
   const [formErrors, setFormErrors] = useState({});
 
   let navigate = useNavigate();
@@ -39,6 +40,7 @@ const AddStore = () => {
         desc,
         dir,
         downloadURL,
+        location,
         author: { name: user.displayName, id: user.uid },
       });
       navigate("/stores");
@@ -56,6 +58,9 @@ const AddStore = () => {
     if (!dir) {
       errors.dir = "Directory is required!";
     }
+    if (!location) {
+      errors.location = "Location is required!";
+    }
     return errors;
   };
 
@@ -72,6 +77,21 @@ const AddStore = () => {
             }}
           />
           <div className={styles.formValidation}>{formErrors.title}</div>
+        </div>
+        <div className={styles.inputGp}>
+          <label>Location:</label>
+          <select
+            value={location}
+            onChange={(event) => {
+              setLocation(event.target.value);
+            }}
+          >
+            <option value=""></option>
+            <option value="PGP">PGP</option>
+            <option value="PGP">UTown</option>
+            <option value="PGP">Techno</option>
+          </select>
+          <div className={styles.formValidation}>{formErrors.location}</div>
         </div>
         <div className={styles.inputGp}>
           <label>Store Directory (For webpage):</label>
