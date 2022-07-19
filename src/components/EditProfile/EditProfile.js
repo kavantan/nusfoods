@@ -70,60 +70,64 @@ const AddStore = () => {
 
   return (
     <div className={styles.createDealPage}>
-      <div className={styles.cpContainer}>
-        <h1>Edit Profile</h1>
-        <div className={styles.inputGp}>
-          <label>Display Name:</label>
-          <input
-            value={name}
-            placeholder="Eg. Jacob"
-            onChange={(event) => {
-              setName(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.title}</div>
+      {user ? (
+        <div className={styles.cpContainer}>
+          <h1>Edit Profile</h1>
+          <div className={styles.inputGp}>
+            <label>Display Name:</label>
+            <input
+              value={name}
+              placeholder="Eg. Jacob"
+              onChange={(event) => {
+                setName(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.title}</div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Username / Profile Directory:</label>
+            <input
+              value={dir}
+              placeholder="Eg. kavan-tan"
+              onChange={(event) => {
+                setDir(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.dir}</div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Display Picture (Optional):</label>
+            <input
+              type="file"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <Button
+              variant="contained"
+              component="span"
+              onClick={uploadFile}
+              style={{ backgroundColor: "#42413d" }}
+            >
+              Upload Image
+            </Button>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Biography / About Me:</label>
+            <textarea
+              value={biography}
+              placeholder="Eg. Hi, I am Kavan, I like to eat."
+              onChange={(event) => {
+                setBiography(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.desc}</div>
+          </div>
+          <button onClick={updateProfile}>Submit Changes</button>
         </div>
-        <div className={styles.inputGp}>
-          <label>Username / Profile Directory:</label>
-          <input
-            value={dir}
-            placeholder="Eg. kavan-tan"
-            onChange={(event) => {
-              setDir(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.dir}</div>
-        </div>
-        <div className={styles.inputGp}>
-          <label>Display Picture (Optional):</label>
-          <input
-            type="file"
-            onChange={(event) => {
-              setImageUpload(event.target.files[0]);
-            }}
-          />
-          <Button
-            variant="contained"
-            component="span"
-            onClick={uploadFile}
-            style={{ backgroundColor: "#42413d" }}
-          >
-            Upload Image
-          </Button>
-        </div>
-        <div className={styles.inputGp}>
-          <label>Biography / About Me:</label>
-          <textarea
-            value={biography}
-            placeholder="Eg. Hi, I am Kavan, I like to eat."
-            onChange={(event) => {
-              setBiography(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.desc}</div>
-        </div>
-        <button onClick={updateProfile}>Submit Changes</button>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
