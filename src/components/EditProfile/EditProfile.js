@@ -63,7 +63,7 @@ const AddStore = () => {
       errors.title = "Display name is required!";
     }
     if (!dir) {
-      errors.dir = "Directory is required!";
+      errors.dir = "Username is required!";
     }
     return errors;
   };
