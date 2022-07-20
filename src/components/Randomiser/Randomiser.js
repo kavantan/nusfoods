@@ -31,6 +31,23 @@ const Randomiser = ({ open, onClose }) => {
     setChecked(updatedList);
   };
 
+  const randomiser = () => {
+    var foodstoresTemp = foodstores.filter((foodstore) =>
+      checked.includes(foodstore.data.location)
+    );
+    setChecked([]);
+    if (foodstoresTemp.length === 1) {
+      navigate("/stores/" + foodstoresTemp[0].data.dir);
+    } else {
+      navigate(
+        "/stores/" +
+          foodstoresTemp[
+            Math.floor(Math.random() * (foodstoresTemp.length + 1))
+          ].data.dir
+      );
+    }
+  };
+
   const getLocations = () => {
     getDocs(locationsCollectionRef)
       .then((response) => {
@@ -88,12 +105,7 @@ const Randomiser = ({ open, onClose }) => {
                 <button
                   className={styles.btnPrimary}
                   onClick={() => {
-                    navigate(
-                      "/stores/" +
-                        foodstores[
-                          Math.floor(Math.random() * (foodstores.length + 1))
-                        ].data.dir
-                    );
+                    randomiser();
                     onClose();
                   }}
                 >
