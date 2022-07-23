@@ -147,18 +147,20 @@ const StoreDetails = ({ storeDir }) => {
 
   return (
     <>
-      <div className={styles.button}>
-        <Button
-          variant="contained"
-          size="medium"
-          style={{ backgroundColor: "#e1ad01" }}
-          onClick={() => navigate("/stores")}
-        >
-          Back to stores
-        </Button>
-      </div>
-
       <div className={styles.storeDetailsPage}>
+        <div className={styles.row}>
+          <div className={styles.backToStores}>
+            <Button
+              variant="contained"
+              size="medium"
+              style={{ backgroundColor: "#e1ad01" }}
+              onClick={() => navigate("/stores")}
+            >
+              Back to stores
+            </Button>
+          </div>
+          <div className={styles.stars}>stars</div>
+        </div>
         {foodstores.map((foodstore) => {
           return (
             foodstore.data.dir === storeDir && (
