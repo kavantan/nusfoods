@@ -91,12 +91,12 @@ const Randomiser = ({ open, onClose }) => {
                 <div className={styles.checkboxes}>
                   {locations.map((location) => (
                     <div>
-                      <span>{location.id}</span>
                       <input
                         value={location.id}
                         type="checkbox"
                         onChange={handleCheck}
                       />
+                      <span>{location.id}</span>
                     </div>
                   ))}
                 </div>
