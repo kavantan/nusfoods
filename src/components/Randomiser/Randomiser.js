@@ -87,16 +87,16 @@ const Randomiser = ({ open, onClose }) => {
                 <CloseIcon />
               </p>
               <div className={styles.content}>
-                Randomiser Filter (Click to Include in Search):
+                Randomiser Filter (Select at least one location):
                 <div className={styles.checkboxes}>
                   {locations.map((location) => (
                     <div>
+                      <span>{location.id}</span>
                       <input
                         value={location.id}
                         type="checkbox"
                         onChange={handleCheck}
                       />
-                      <span>{location.id}</span>
                     </div>
                   ))}
                 </div>
