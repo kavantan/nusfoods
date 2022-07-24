@@ -2,12 +2,12 @@ import styles from "./EditProfile.module.css";
 import Button from "@mui/material/Button";
 import { useState, useEffect } from "react";
 import { setDoc, getDoc, doc } from "firebase/firestore";
-import { db } from "../../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebaseConfig.js";
 import { v4 } from "uuid";
+import { usersCollectionRef } from "../../config/firebase.collections";
 
 const AddStore = () => {
   const { user } = useAuth();
@@ -19,7 +19,7 @@ const AddStore = () => {
   let navigate = useNavigate();
 
   const getUser = async (user) => {
-    const userRef = doc(db, "users", user.uid);
+    const userRef = doc(usersCollectionRef, user.uid);
     const docSnap = await getDoc(userRef);
     setName(docSnap.data().name);
     setDir(docSnap.data().dir);
@@ -46,7 +46,7 @@ const AddStore = () => {
   const updateProfile = async () => {
     setFormErrors(validate());
     if (Object.keys(validate()).length === 0) {
-      const userRef = doc(db, "users", user.uid);
+      const userRef = doc(usersCollectionRef, user.uid);
       setDoc(userRef, {
         name,
         dir,
