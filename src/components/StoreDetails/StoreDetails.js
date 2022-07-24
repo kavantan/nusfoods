@@ -7,8 +7,9 @@ import {
   deleteDoc,
   doc,
   addDoc,
+  setDoc,
   serverTimestamp,
-  getDoc,
+  collection,
 } from "firebase/firestore";
 import {
   usersCollectionRef,
@@ -44,6 +45,8 @@ const StoreDetails = ({ storeDir }) => {
   const [usersData, setUsersData] = useState([]);
 
   const [rating, setRating] = useState(0);
+  const [rated, setRated] = useState(false);
+  const [showRating, setShowRating] = useState(false);
 
   let navigate = useNavigate();
 
@@ -53,6 +56,33 @@ const StoreDetails = ({ storeDir }) => {
     getDeals();
     getUsers();
   }, [randstate]);
+
+  const createRating = async (newValue) => {
+    const ratingsRef = doc(
+      foodstoreCollectionRef,
+      storeDir,
+      "ratings",
+      user.uid
+    );
+    await setDoc(ratingsRef, {
+      rating: newValue,
+    });
+  };
+
+  const displayRating = (event) => {
+    setShowRating(true);
+  };
+
+  const getFoodstoreRatings = async () => {
+    const ratingsRef = collection(foodstoreCollectionRef, storeDir, "ratings");
+    const ratingsSnap = await getDocs(ratingsRef);
+    ratingsSnap.forEach((rating) => {
+      if (rating.id === user.uid) {
+        setRating(rating.data().rating);
+        setRated(true);
+      }
+    });
+  };
 
   const uploadFile = () => {
     if (imageUpload == null) return;
@@ -167,15 +197,36 @@ const StoreDetails = ({ storeDir }) => {
             foodstore.data.dir === storeDir && (
               <>
                 <div className={styles.storeTitle}>{foodstore.data.title}</div>
-                <Rating
-                  value={rating}
-                  onChange={(event, newValue) => {
-                    setRating(newValue);
-                  }}
-                />
-
-                <Rating name="disabled" value={rating} disabled />
-                <div>5.0 by 3 people</div>
+                {showRating ? (
+                  <div className={styles.rating}>
+                    {rated ? (
+                      <Rating name="disabled" value={rating} disabled />
+                    ) : (
+                      <Rating
+                        value={rating}
+                        onChange={(event, newValue) => {
+                          setRating(newValue);
+                          setRated(true);
+                          createRating(newValue);
+                        }}
+                      />
+                    )}
+                  </div>
+                ) : (
+                  <div className={styles.showStoreRatings}>
+                    <Button
+                      variant="contained"
+                      size="medium"
+                      style={{ backgroundColor: "#e1ad01" }}
+                      onClick={() => {
+                        getFoodstoreRatings();
+                        displayRating();
+                      }}
+                    >
+                      Show Store Ratings (By Users)
+                    </Button>
+                  </div>
+                )}
                 <div>
                   {foodstore.data.downloadURL !== "" ? (
                     <img
