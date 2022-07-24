@@ -236,4 +236,7 @@ textarea {
 .showStoreRatings {
   padding-top: 10px;
   white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

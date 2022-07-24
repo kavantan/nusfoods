@@ -72,7 +72,7 @@ const StoreDetails = ({ storeDir }) => {
   };
 
   const displayRating = (event) => {
-    setShowRating(true);
+    setShowRating((current) => !current);
   };
 
   const getFoodstoreRatings = async () => {
@@ -207,6 +207,19 @@ const StoreDetails = ({ storeDir }) => {
                 <div className={styles.storeTitle}>{foodstore.data.title}</div>
                 {showRating ? (
                   <div>
+                    <div className={styles.showStoreRatings}>
+                      <Button
+                        variant="contained"
+                        size="medium"
+                        style={{ backgroundColor: "#e1ad01" }}
+                        onClick={() => {
+                          getFoodstoreRatings();
+                          displayRating();
+                        }}
+                      >
+                        Hide Store Ratings
+                      </Button>
+                    </div>
                     <div className={styles.rating}>
                       {rated ? (
                         <Rating name="disabled" value={rating} disabled />
@@ -237,7 +250,7 @@ const StoreDetails = ({ storeDir }) => {
                         displayRating();
                       }}
                     >
-                      Show Store Ratings (By Users)
+                      Show Store Ratings
                     </Button>
                   </div>
                 )}
