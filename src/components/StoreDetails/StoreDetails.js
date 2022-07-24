@@ -47,6 +47,8 @@ const StoreDetails = ({ storeDir }) => {
   const [rating, setRating] = useState(0);
   const [rated, setRated] = useState(false);
   const [showRating, setShowRating] = useState(false);
+  const [averageScore, setAverageScore] = useState(0);
+  const [voters, setVoters] = useState(0);
 
   let navigate = useNavigate();
 
@@ -76,12 +78,18 @@ const StoreDetails = ({ storeDir }) => {
   const getFoodstoreRatings = async () => {
     const ratingsRef = collection(foodstoreCollectionRef, storeDir, "ratings");
     const ratingsSnap = await getDocs(ratingsRef);
+    var totalScore = 0;
+    var totalVoters = 0;
     ratingsSnap.forEach((rating) => {
+      totalVoters += 1;
+      totalScore += rating.data().rating;
       if (rating.id === user.uid) {
         setRating(rating.data().rating);
         setRated(true);
       }
     });
+    setAverageScore(totalScore / totalVoters);
+    setVoters(totalVoters);
   };
 
   const uploadFile = () => {
@@ -198,19 +206,25 @@ const StoreDetails = ({ storeDir }) => {
               <>
                 <div className={styles.storeTitle}>{foodstore.data.title}</div>
                 {showRating ? (
-                  <div className={styles.rating}>
-                    {rated ? (
-                      <Rating name="disabled" value={rating} disabled />
-                    ) : (
-                      <Rating
-                        value={rating}
-                        onChange={(event, newValue) => {
-                          setRating(newValue);
-                          setRated(true);
-                          createRating(newValue);
-                        }}
-                      />
-                    )}
+                  <div>
+                    <div className={styles.rating}>
+                      {rated ? (
+                        <Rating name="disabled" value={rating} disabled />
+                      ) : (
+                        <Rating
+                          value={rating}
+                          onChange={(event, newValue) => {
+                            setRating(newValue);
+                            setRated(true);
+                            createRating(newValue);
+                            getFoodstoreRatings();
+                          }}
+                        />
+                      )}
+                    </div>
+                    <div>
+                      Average Rating ({voters} votes): {averageScore} Stars
+                    </div>
                   </div>
                 ) : (
                   <div className={styles.showStoreRatings}>
