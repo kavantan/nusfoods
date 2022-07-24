@@ -4,13 +4,11 @@ import { useState } from "react";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
-import { useAuth } from "../../hooks/useAuth.js";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebaseConfig.js";
 import { v4 } from "uuid";
 
 const AddStore = () => {
-  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [dir, setDir] = useState("");
@@ -41,7 +39,6 @@ const AddStore = () => {
         dir,
         downloadURL,
         location,
-        author: { name: user.displayName, id: user.uid },
       });
       navigate("/stores");
     }
