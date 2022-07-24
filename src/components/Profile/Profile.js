@@ -7,7 +7,6 @@ import {
   postsCollectionRef,
   foodstoreCollectionRef,
 } from "../../config/firebase.collections";
-import { db } from "../../config/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
