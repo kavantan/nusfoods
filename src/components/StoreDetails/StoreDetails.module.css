@@ -240,3 +240,11 @@ textarea {
   align-items: center;
   justify-content: center;
 }
+
+.deleteRating button {
+  border: none;
+  background: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #2d2722;
+}

@@ -59,6 +59,11 @@ const StoreDetails = ({ storeDir }) => {
     getUsers();
   }, [randstate]);
 
+  const deleteRating = () => {
+    setRandstate(randstate + 1);
+    deleteDoc(doc(foodstoreCollectionRef, storeDir, "ratings", user.uid));
+  };
+
   const createRating = async (newValue) => {
     const ratingsRef = doc(
       foodstoreCollectionRef,
@@ -222,7 +227,19 @@ const StoreDetails = ({ storeDir }) => {
                     </div>
                     <div className={styles.rating}>
                       {rated ? (
-                        <Rating name="disabled" value={rating} disabled />
+                        <div className={styles.deleteRating}>
+                          <Rating name="disabled" value={rating} disabled />
+                          <button
+                            onClick={() => {
+                              setRated(false);
+                              setRating(0);
+                              deleteRating();
+                              getFoodstoreRatings();
+                            }}
+                          >
+                            <DeleteIcon />
+                          </button>
+                        </div>
                       ) : (
                         <Rating
                           value={rating}
