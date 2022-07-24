@@ -2,7 +2,6 @@ import styles from "./Forum.module.css";
 import { useEffect, useState } from "react";
 import { getDocs, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { useAuth } from "../../hooks/useAuth.js";
-import { db } from "../../config/firebaseConfig";
 import {
   usersCollectionRef,
   postsCollectionRef,
@@ -56,7 +55,7 @@ function Forum() {
 
   const deletePost = (id) => {
     setRandstate(randstate + 1);
-    deleteDoc(doc(db, "posts", id));
+    deleteDoc(doc(postsCollectionRef, id));
   };
 
   const getFoodstores = () => {
