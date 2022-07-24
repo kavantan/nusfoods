@@ -6,10 +6,8 @@ import {
   dealsCollectionRef,
   foodstoreCollectionRef,
 } from "../../config/firebase.collections";
-import { useAuth } from "../../hooks/useAuth.js";
 
 const AddDeal = () => {
-  const { user } = useAuth();
   const [foodstores, setFoodstores] = useState([]);
   const [deal, setDeal] = useState("");
   const [details, setDetails] = useState("");
@@ -25,7 +23,6 @@ const AddDeal = () => {
         deal,
         details,
         foodStoreId,
-        author: { name: user.displayName, id: user.uid },
       });
       navigate("/deals");
     }
