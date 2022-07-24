@@ -8,8 +8,8 @@ import {
   doc,
   addDoc,
   serverTimestamp,
+  getDoc,
 } from "firebase/firestore";
-import { db } from "../../config/firebaseConfig";
 import {
   usersCollectionRef,
   dealsCollectionRef,
@@ -24,6 +24,7 @@ import { Tooltip } from "@mui/material";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebaseConfig.js";
 import { v4 } from "uuid";
+import Rating from "@mui/material/Rating";
 
 const StoreDetails = ({ storeDir }) => {
   const { user } = useAuth();
@@ -41,6 +42,8 @@ const StoreDetails = ({ storeDir }) => {
   const [imageUpload, setImageUpload] = useState(null);
 
   const [usersData, setUsersData] = useState([]);
+
+  const [rating, setRating] = useState(0);
 
   let navigate = useNavigate();
 
@@ -131,7 +134,7 @@ const StoreDetails = ({ storeDir }) => {
 
   const deletePost = (id) => {
     setRandstate(randstate + 1);
-    deleteDoc(doc(db, "posts", id));
+    deleteDoc(doc(postsCollectionRef, id));
   };
 
   const validate = () => {
@@ -148,24 +151,31 @@ const StoreDetails = ({ storeDir }) => {
   return (
     <>
       <div className={styles.storeDetailsPage}>
-        <div className={styles.row}>
-          <div className={styles.backToStores}>
-            <Button
-              variant="contained"
-              size="medium"
-              style={{ backgroundColor: "#e1ad01" }}
-              onClick={() => navigate("/stores")}
-            >
-              Back to stores
-            </Button>
-          </div>
-          <div className={styles.stars}>stars</div>
+        <div className={styles.backToStores}>
+          <Button
+            variant="contained"
+            size="medium"
+            style={{ backgroundColor: "#e1ad01" }}
+            onClick={() => navigate("/stores")}
+          >
+            Back to stores
+          </Button>
         </div>
+
         {foodstores.map((foodstore) => {
           return (
             foodstore.data.dir === storeDir && (
               <>
                 <div className={styles.storeTitle}>{foodstore.data.title}</div>
+                <Rating
+                  value={rating}
+                  onChange={(event, newValue) => {
+                    setRating(newValue);
+                  }}
+                />
+
+                <Rating name="disabled" value={rating} disabled />
+                <div>5.0 by 3 people</div>
                 <div>
                   {foodstore.data.downloadURL !== "" ? (
                     <img

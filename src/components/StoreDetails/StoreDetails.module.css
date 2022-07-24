@@ -222,17 +222,6 @@ textarea {
   color: blue;
 }
 
-.row {
-  display: flex;
-  height: 100%;
-}
-
-.row .backToStores {
-  flex: 1;
-  float: right;
+.backToStores {
   white-space: nowrap;
-}
-
-.row .stars {
-  flex: 1;
 }
