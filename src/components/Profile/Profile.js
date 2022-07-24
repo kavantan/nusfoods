@@ -50,7 +50,7 @@ const Profile = () => {
 
   const deletePost = (id) => {
     setRandstate(randstate + 1);
-    deleteDoc(doc(db, "posts", id));
+    deleteDoc(doc(postsCollectionRef, id));
   };
 
   const getFoodstores = () => {
