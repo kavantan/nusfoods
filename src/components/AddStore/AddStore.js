@@ -1,7 +1,7 @@
 import styles from "./AddStore.module.css";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-import { addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import { foodstoreCollectionRef } from "../../config/firebase.collections";
 import { useAuth } from "../../hooks/useAuth.js";
@@ -35,7 +35,7 @@ const AddStore = () => {
   const createPost = async () => {
     setFormErrors(validate());
     if (Object.keys(validate()).length === 0) {
-      await addDoc(foodstoreCollectionRef, {
+      await setDoc(doc(foodstoreCollectionRef, dir), {
         title,
         desc,
         dir,
