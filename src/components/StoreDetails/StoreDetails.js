@@ -94,7 +94,7 @@ const StoreDetails = ({ storeDir }) => {
         setRated(true);
       }
     });
-    setAverageScore(totalScore / totalVoters);
+    setAverageScore((totalScore / totalVoters).toFixed(1));
     setVoters(totalVoters);
   };
 
