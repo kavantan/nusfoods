@@ -26,6 +26,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebaseConfig.js";
 import { v4 } from "uuid";
 import Rating from "@mui/material/Rating";
+import ReplayIcon from "@mui/icons-material/Replay";
 
 const StoreDetails = ({ storeDir }) => {
   const { user } = useAuth();
@@ -237,7 +238,7 @@ const StoreDetails = ({ storeDir }) => {
                               getFoodstoreRatings();
                             }}
                           >
-                            <DeleteIcon />
+                            <ReplayIcon />
                           </button>
                         </div>
                       ) : (
