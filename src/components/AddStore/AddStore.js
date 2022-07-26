@@ -7,8 +7,10 @@ import { foodstoreCollectionRef } from "../../config/firebase.collections";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../config/firebaseConfig.js";
 import { v4 } from "uuid";
+import { useAuth } from "../../hooks/useAuth.js";
 
 const AddStore = () => {
+  const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [dir, setDir] = useState("");
@@ -63,72 +65,76 @@ const AddStore = () => {
 
   return (
     <div className={styles.createDealPage}>
-      <div className={styles.cpContainer}>
-        <h1>Add New Food Store</h1>
-        <div className={styles.inputGp}>
-          <label>Store Name:</label>
-          <input
-            placeholder="Eg. Deck Vegetarian"
-            onChange={(event) => {
-              setTitle(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.title}</div>
+      {user ? (
+        <div className={styles.cpContainer}>
+          <h1>Add New Food Store</h1>
+          <div className={styles.inputGp}>
+            <label>Store Name:</label>
+            <input
+              placeholder="Eg. Deck Vegetarian"
+              onChange={(event) => {
+                setTitle(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.title}</div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Location:</label>
+            <select
+              value={location}
+              onChange={(event) => {
+                setLocation(event.target.value);
+              }}
+            >
+              <option value=""></option>
+              <option value="PGP">PGP</option>
+              <option value="PGP">UTown</option>
+              <option value="PGP">Techno</option>
+            </select>
+            <div className={styles.formValidation}>{formErrors.location}</div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Store Directory (For webpage):</label>
+            <input
+              placeholder="Eg. deck-vegetarian"
+              onChange={(event) => {
+                setDir(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.dir}</div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Store Image (Optional):</label>
+            <input
+              type="file"
+              onChange={(event) => {
+                setImageUpload(event.target.files[0]);
+              }}
+            />
+            <Button
+              variant="contained"
+              component="span"
+              onClick={uploadFile}
+              style={{ backgroundColor: "#42413d" }}
+            >
+              Upload Image
+            </Button>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Store Description:</label>
+            <textarea
+              placeholder="Eg. Vegetarian Store at the Deck"
+              onChange={(event) => {
+                setDesc(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.desc}</div>
+          </div>
+          <button onClick={createPost}>Submit Store</button>
         </div>
-        <div className={styles.inputGp}>
-          <label>Location:</label>
-          <select
-            value={location}
-            onChange={(event) => {
-              setLocation(event.target.value);
-            }}
-          >
-            <option value=""></option>
-            <option value="PGP">PGP</option>
-            <option value="PGP">UTown</option>
-            <option value="PGP">Techno</option>
-          </select>
-          <div className={styles.formValidation}>{formErrors.location}</div>
-        </div>
-        <div className={styles.inputGp}>
-          <label>Store Directory (For webpage):</label>
-          <input
-            placeholder="Eg. deck-vegetarian"
-            onChange={(event) => {
-              setDir(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.dir}</div>
-        </div>
-        <div className={styles.inputGp}>
-          <label>Store Image (Optional):</label>
-          <input
-            type="file"
-            onChange={(event) => {
-              setImageUpload(event.target.files[0]);
-            }}
-          />
-          <Button
-            variant="contained"
-            component="span"
-            onClick={uploadFile}
-            style={{ backgroundColor: "#42413d" }}
-          >
-            Upload Image
-          </Button>
-        </div>
-        <div className={styles.inputGp}>
-          <label>Store Description:</label>
-          <textarea
-            placeholder="Eg. Vegetarian Store at the Deck"
-            onChange={(event) => {
-              setDesc(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.desc}</div>
-        </div>
-        <button onClick={createPost}>Submit Store</button>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
