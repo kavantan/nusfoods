@@ -6,8 +6,10 @@ import {
   dealsCollectionRef,
   foodstoreCollectionRef,
 } from "../../config/firebase.collections";
+import { useAuth } from "../../hooks/useAuth.js";
 
 const AddDeal = () => {
+  const { user } = useAuth();
   const [foodstores, setFoodstores] = useState([]);
   const [deal, setDeal] = useState("");
   const [details, setDetails] = useState("");
@@ -61,45 +63,51 @@ const AddDeal = () => {
 
   return (
     <div className={styles.createDealPage}>
-      <div className={styles.cpContainer}>
-        <h1>Add New Deal</h1>
-        <div className={styles.inputGp}>
-          <label>Deal:</label>
-          <input
-            placeholder="Eg. 25% Off on selected Noodle Dishes"
-            onChange={(event) => {
-              setDeal(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.deal}</div>
+      {user ? (
+        <div className={styles.cpContainer}>
+          <h1>Add New Deal</h1>
+          <div className={styles.inputGp}>
+            <label>Deal:</label>
+            <input
+              placeholder="Eg. 25% Off on selected Noodle Dishes"
+              onChange={(event) => {
+                setDeal(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.deal}</div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Food Store:</label>
+            <select
+              value={foodStoreId}
+              onChange={(event) => {
+                setFoodStoreId(event.target.value);
+              }}
+            >
+              <option value=""></option>
+              {foodstores.map((fs) => (
+                <option value={fs.id}>{fs.data.title}</option>
+              ))}
+            </select>
+            <div className={styles.formValidation}>
+              {formErrors.foodStoreId}
+            </div>
+          </div>
+          <div className={styles.inputGp}>
+            <label>Deal Details:</label>
+            <textarea
+              placeholder="Eg. 25% Off on selected noodle items: DanDanMian, Beef Noodles, Chinese Noodles"
+              onChange={(event) => {
+                setDetails(event.target.value);
+              }}
+            />
+            <div className={styles.formValidation}>{formErrors.details}</div>
+          </div>
+          <button onClick={createPost}>Submit Deal</button>
         </div>
-        <div className={styles.inputGp}>
-          <label>Food Store:</label>
-          <select
-            value={foodStoreId}
-            onChange={(event) => {
-              setFoodStoreId(event.target.value);
-            }}
-          >
-            <option value=""></option>
-            {foodstores.map((fs) => (
-              <option value={fs.id}>{fs.data.title}</option>
-            ))}
-          </select>
-          <div className={styles.formValidation}>{formErrors.foodStoreId}</div>
-        </div>
-        <div className={styles.inputGp}>
-          <label>Deal Details:</label>
-          <textarea
-            placeholder="Eg. 25% Off on selected noodle items: DanDanMian, Beef Noodles, Chinese Noodles"
-            onChange={(event) => {
-              setDetails(event.target.value);
-            }}
-          />
-          <div className={styles.formValidation}>{formErrors.details}</div>
-        </div>
-        <button onClick={createPost}>Submit Deal</button>
-      </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
