@@ -18,5 +18,4 @@ Users can write comments, rate and give reviews about any NUS food store of thei
 
 ## Authors
 
-[senwei01](https://github.com/senwei01)
 [kavantan](https://github.com/kavantan)
